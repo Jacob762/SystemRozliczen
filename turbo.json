@@ -1,0 +1,22 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "globalDependencies": ["**/.env", "**/.env.*local", "**/.eslintrc.js"],
+  "pipeline": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": [".next/**", "!.next/cache/**"]
+    },
+    "codegen": {},
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "format": {},
+    "format:check": {},
+    "lint": {},
+    "start": {
+      "cache": false,
+      "persistent": true
+    }
+  }
+}

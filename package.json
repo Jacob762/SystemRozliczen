@@ -1,0 +1,29 @@
+{
+  "name": "system-rozliczen",
+  "private": true,
+  "version": "0.0.0",
+  "scripts": {
+    "build": "turbo run build",
+    "start": "turbo run start",
+    "dev": "turbo run dev",
+    "format": "turbo run format",
+    "format:check": "turbo run format:check",
+    "lint": "turbo run lint"
+  },
+  "packageManager": "pnpm@8.13.1",
+  "engines": {
+    "node": "^20"
+  },
+  "volta": {
+    "node": "20.10.0",
+    "pnpm": "8.13.1"
+  },
+  "devDependencies": {
+    "@omikorin/prettier-config": "^1.0.0",
+    "@typescript-eslint/parser": "^6.16.0",
+    "eslint": "^8.56.0",
+    "prettier": "^3.1.1",
+    "turbo": "^1.11.2"
+  },
+  "prettier": "@omikorin/prettier-config"
+}

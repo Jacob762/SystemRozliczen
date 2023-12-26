@@ -1,0 +1,11 @@
+# artifacts
+build
+dist
+coverage
+
+# ignore files
+.gitignore
+.prettierignore
+
+# lockfiles
+pnpm-lock.json
