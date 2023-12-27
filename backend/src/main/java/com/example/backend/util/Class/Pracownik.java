@@ -6,8 +6,7 @@ public class Pracownik {
     private static int count = 0;
     public Pracownik(String nazwa){
         this.Nazwa = nazwa;
-        this.Id = count;
-        count++;
+        this.Id = count++;
     }
 
     public String getNazwa(){

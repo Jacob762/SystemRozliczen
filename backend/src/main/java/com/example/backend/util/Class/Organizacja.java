@@ -29,27 +29,43 @@ public class Organizacja {
         return this.Id;
     }
 
+    public Pracownik getPracownik(int index){
+        for(int i=0;i< Pracownicy.size();i++) if(Pracownicy.get(i).getId()==index) return Pracownicy.get(i);
+        return null;
+    }
+    public Dokument getDokument(int index){
+        for(int i=0;i< Dokumenty.size();i++) if(Dokumenty.get(i).getId()==index) return Dokumenty.get(i);
+        return null;
+    }
+    public Ksiegowy getKsiegowy(int index) {
+        for(int i=0;i< Ksiegowi.size();i++) if(Ksiegowi.get(i).getId()==index) return Ksiegowi.get(i);
+        return null;
+    }
+
     public String getNazwa(){
         return this.Nazwa;
     }
 
-    public boolean dodajUzytkownika(String rodzaj, String nazwa){
+    public boolean dodajPracownika(Pracownik pracownik){
         try{
-            switch (rodzaj){
-                case "Ksiegowy":
-                    Ksiegowi.add(new Ksiegowy(nazwa));
-                    return true;
-                case "Pracownik":
-                    Pracownicy.add(new Pracownik(nazwa));
-                    return true;
-                case "Admin":
-                    Administratorzy.add(new AdministratorOrg(nazwa));
-                    return true;
-            }
+            Pracownicy.add(pracownik);
+            return true;
         } catch (Exception e){
             return false;
         }
-        return false;
     }
 
+    public void wyswietlPracownikow(){
+        int size = Pracownicy.size();
+        for(int i=0;i<size;i++) System.out.println(Pracownicy.get(i).getId() + "   " + Pracownicy.get(i).getNazwa());
+    }
+
+    public boolean dodajDokument(Dokument dokument){
+        try{
+            Dokumenty.add(dokument);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
 }
