@@ -21,16 +21,16 @@ public class Aplikacja {
     public Aplikacja(){
         Organizacje = new ArrayList<>();
         Administratorzy = new ArrayList<>();
-// Runtime uzywany do wywolywania funkcji przy wylaczaniu sie aplikacji:
-//        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-//            public void run() {
-//                try {
-//                    saveDataToJson();
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        }));
+        // Runtime uzywany do wywolywania funkcji przy wylaczaniu sie aplikacji:
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                try {
+                   saveDataToJson();
+                } catch (IOException e) {
+                   throw new RuntimeException(e);
+                }
+            }
+        }));
     }
 
     @PostMapping("/Org")
@@ -120,9 +120,21 @@ public class Aplikacja {
     //Funkcja do zapisu danych w formacie json w folderze Data
     // https://stackoverflow.com/questions/51762784/call-a-method-before-the-java-program-closes
     private void saveDataToJson() throws IOException {
+        System.out.println("Saving data...");
+
         Gson gson = new Gson();
-        gson.toJson(Organizacje,new FileWriter("src/main/java/com/example/backend/util/Data/dane.json"));
+        String json = gson.toJson(Organizacje);
+
+        try (FileWriter fw = new FileWriter("src/main/java/com/example/backend/util/Data/organizacje.json")) {
+            fw.write(json);
+            fw.close();
+        } catch (Exception e) {
+            throw e;
+        }
+
+        System.out.println("Data saved.");
     } // cos nie dziala?
+
     //Funkcja do wczytywania danych w formacie json z folderu Data, uruchamiana przy wlaczeniu sie aplikacji
     private void readDataFromJson(){
 
