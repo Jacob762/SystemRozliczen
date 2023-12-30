@@ -5,13 +5,17 @@ import com.example.backend.util.Class.*;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import com.google.gson.stream.JsonReader;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @RestController
@@ -21,16 +25,23 @@ public class Aplikacja {
     public Aplikacja(){
         Organizacje = new ArrayList<>();
         Administratorzy = new ArrayList<>();
-// Runtime uzywany do wywolywania funkcji przy wylaczaniu sie aplikacji:
-//        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-//            public void run() {
-//                try {
-//                    saveDataToJson();
-//                } catch (IOException e) {
-//                    throw new RuntimeException(e);
-//                }
-//            }
-//        }));
+
+        try {
+            readDataFromJson();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        // Runtime uzywany do wywolywania funkcji przy wylaczaniu sie aplikacji:
+        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+            public void run() {
+                try {
+                   saveDataToJson();
+                } catch (IOException e) {
+                   throw new RuntimeException(e);
+                }
+            }
+        }));
     }
 
     @PostMapping("/Org")
@@ -120,11 +131,53 @@ public class Aplikacja {
     //Funkcja do zapisu danych w formacie json w folderze Data
     // https://stackoverflow.com/questions/51762784/call-a-method-before-the-java-program-closes
     private void saveDataToJson() throws IOException {
-        Gson gson = new Gson();
-        gson.toJson(Organizacje,new FileWriter("src/main/java/com/example/backend/util/Data/dane.json"));
-    } // cos nie dziala?
-    //Funkcja do wczytywania danych w formacie json z folderu Data, uruchamiana przy wlaczeniu sie aplikacji
-    private void readDataFromJson(){
+        System.out.println("Saving data...");
 
+        Gson gson = new Gson();
+        
+        String org = gson.toJson(Organizacje);
+        try (FileWriter fw = new FileWriter("src/main/java/com/example/backend/util/Data/organizacje.json")) {
+            fw.write(org);
+            fw.close();
+        } catch (Exception e) {
+            throw e;
+        }
+        
+        String adm = gson.toJson(Administratorzy);
+        try (FileWriter fw = new FileWriter("src/main/java/com/example/backend/util/Data/administratorzy.json")) {
+            fw.write(adm);
+            fw.close();
+        } catch (Exception e) {
+            throw e;
+        }
+        
+        System.out.println("Data saved.");
+    } // cos nie dziala?
+
+    //Funkcja do wczytywania danych w formacie json z folderu Data, uruchamiana przy wlaczeniu sie aplikacji
+    private void readDataFromJson() throws IOException {
+        Gson gson = new Gson();
+        
+        String org = new String("src/main/java/com/example/backend/util/Data/organizacje.json");
+        try (JsonReader reader = new JsonReader(new FileReader(org))) {
+            Organizacja[] data = gson.fromJson(reader, Organizacja[].class);
+            if (data.length > 0)
+            {
+                Organizacje = Arrays.asList(data);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
+
+        String adm = new String("src/main/java/com/example/backend/util/Data/administratorzy.json");
+        try (JsonReader reader = new JsonReader(new FileReader(adm))) {
+            AdministratorAPK[] data = gson.fromJson(reader, AdministratorAPK[].class);
+            if (data.length > 0)
+            {
+                Administratorzy = Arrays.asList(data);
+            }
+        } catch (Exception e) {
+            throw e;
+        }
     }
 }
