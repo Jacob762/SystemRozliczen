@@ -76,6 +76,24 @@ public class Aplikacja {
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(pracownik);
     }
 
+    @PostMapping("/accountant")
+    public ResponseEntity<Ksiegowy> dodajKsiegowego(@RequestBody String object){
+        JsonObject jsonObject = JsonParser.parseString(object)
+                .getAsJsonObject();
+        String name = jsonObject.get("Nazwa").toString();
+        int id = jsonObject.get("IdOrg").getAsInt();
+        try {
+            Organizacje.get(id);
+        } catch (IndexOutOfBoundsException ex){
+            return ResponseEntity.notFound().build();
+        }
+        Ksiegowy ksiegowy = new Ksiegowy(name.substring(1, name.length() - 1));
+        if (Organizacje.get(id).dodajKsiegowego(ksiegowy)) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(ksiegowy);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(ksiegowy);
+    }
+
     @PostMapping("/Adm/Add")
     public ResponseEntity<AdministratorAPK> dodajAdministratoraAPK(@RequestBody String object){
         AdministratorAPK admin = new AdministratorAPK(object);

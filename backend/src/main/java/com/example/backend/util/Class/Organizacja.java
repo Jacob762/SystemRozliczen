@@ -60,6 +60,15 @@ public class Organizacja {
         for(int i=0;i<size;i++) System.out.println(Pracownicy.get(i).getId() + "   " + Pracownicy.get(i).getNazwa());
     }
 
+    public boolean dodajKsiegowego(Ksiegowy ksiegowy) {
+        try {
+            Ksiegowi.add(ksiegowy);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
     public boolean dodajDokument(Dokument dokument){
         try{
             Dokumenty.add(dokument);
