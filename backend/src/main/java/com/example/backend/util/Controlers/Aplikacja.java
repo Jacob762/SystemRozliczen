@@ -163,7 +163,7 @@ public class Aplikacja {
             Organizacja[] data = gson.fromJson(reader, Organizacja[].class);
             if (data.length > 0)
             {
-                Organizacje = Arrays.asList(data);
+                Organizacje = new ArrayList<Organizacja>(Arrays.asList(data));
             }
         } catch (Exception e) {
             throw e;
@@ -174,7 +174,7 @@ public class Aplikacja {
             AdministratorAPK[] data = gson.fromJson(reader, AdministratorAPK[].class);
             if (data.length > 0)
             {
-                Administratorzy = Arrays.asList(data);
+                Administratorzy = new ArrayList<AdministratorAPK>(Arrays.asList(data));
             }
         } catch (Exception e) {
             throw e;
