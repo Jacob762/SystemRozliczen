@@ -1,10 +1,9 @@
 package com.example.backend.util.Class;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class Organizacja {
-    private List<Dokument> Dokumenty;
+    public List<Dokument> Dokumenty;
     private List<AdministratorOrg> Administratorzy;
     private List<Ksiegowy> Ksiegowi;
     private List<Pracownik> Pracownicy;
@@ -50,6 +49,11 @@ public class Organizacja {
         return null;
     }
 
+    public AdministratorOrg getAdmin(int index){
+        for(AdministratorOrg admin : Administratorzy) if(admin.getId()==index) return admin;
+        return null;
+    }
+
     public String getNazwa(){
         return this.Nazwa;
     }
@@ -66,6 +70,15 @@ public class Organizacja {
     public void wyswietlPracownikow(){
         int size = Pracownicy.size();
         for(int i=0;i<size;i++) System.out.println(Pracownicy.get(i).getId() + "   " + Pracownicy.get(i).getNazwa());
+    }
+
+    public boolean dodajAdministratora(AdministratorOrg administratorOrg){
+        try{
+            Administratorzy.add(administratorOrg);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
     }
 
     public boolean dodajKsiegowego(Ksiegowy ksiegowy) {
@@ -95,5 +108,34 @@ public class Organizacja {
         } catch (Exception e){
             return false;
         }
+    }
+
+    public boolean usunDokument(Dokument dokument){
+        try{
+            Dokumenty.remove(dokument);
+            return true;
+        } catch (Exception e){
+            return false;
+        }
+    }
+
+    public double totalStatystyka(){
+        double wynik = 0.0;
+        for(Dokument dokument : Dokumenty){
+            wynik+= dokument.getKwota();
+        }
+        return wynik;
+    }
+
+    public double okresowaStatystyka(Date poczatek, Date koniec){
+        double wynik = 0.0;
+        for(Dokument dokument : Dokumenty){
+            if(dokument.getData().after(poczatek)&&dokument.getData().before(koniec)) wynik+=dokument.getKwota();
+        }
+        return wynik;
+    }
+
+    public void sortujDokumenty(){
+        Collections.sort(Dokumenty, Comparator.comparing(Dokument::getKwota));
     }
 }
