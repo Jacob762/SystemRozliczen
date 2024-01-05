@@ -25,6 +25,14 @@ public class Organizacja {
         Raporty = new ArrayList<>();
     }
 
+    public static void setCount(int newCount) {
+        count = newCount;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
     public int getId(){
         return this.Id;
     }
@@ -67,6 +75,17 @@ public class Organizacja {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public boolean usunKsiegowego(int idKsieg) {
+        for (int i = 0; i < Ksiegowi.size(); i++)
+        {
+            if (Ksiegowi.get(i).getId() == idKsieg) {
+                Ksiegowi.remove(i);
+                return true;
+            }
+        }
+        return false;
     }
 
     public boolean dodajDokument(Dokument dokument){
