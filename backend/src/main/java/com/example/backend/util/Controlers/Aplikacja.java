@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
+import org.aspectj.weaver.ast.Or;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -26,25 +27,26 @@ public class Aplikacja {
         Organizacje = new ArrayList<>();
         Administratorzy = new ArrayList<>();
 
-        try {
-            readDataFromJson();
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
+//        try {
+//            readDataFromJson();
+//        } catch (Exception e) {
+//            System.out.println(e.getMessage());
+//        }
+
 
         // Runtime uzywany do wywolywania funkcji przy wylaczaniu sie aplikacji:
-        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-            public void run() {
-                try {
-                   saveDataToJson();
-                } catch (IOException e) {
-                   throw new RuntimeException(e);
-                }
-            }
-        }));
+//        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+//            public void run() {
+//                try {
+//                   saveDataToJson();
+//                } catch (IOException e) {
+//                   throw new RuntimeException(e);
+//                }
+//            }
+//        }));
     }
 
-    @PostMapping("/Org")
+    @PostMapping("/organization")
     public ResponseEntity<Organizacja> dodajOrganizacje(@RequestBody String nazwa) {
         Organizacja org = new Organizacja(nazwa);
         Organizacje.add(org);
@@ -52,13 +54,13 @@ public class Aplikacja {
         return ResponseEntity.status(HttpStatus.CREATED).body(org);
     }
 
-    @DeleteMapping("/Org")
+    @DeleteMapping("/organization")
     public ResponseEntity<Organizacja> usunOrganizacje(@RequestBody int Id){
         Organizacje.remove(Id);
         return ResponseEntity.noContent().build();
     }
 
-    @PostMapping("/User")
+    @PostMapping("/user")
     public ResponseEntity<Pracownik> dodajPracownik(@RequestBody String object){
         JsonObject jsonObject = JsonParser.parseString(object)
                 .getAsJsonObject();
@@ -76,32 +78,14 @@ public class Aplikacja {
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(pracownik);
     }
 
-    @PostMapping("/accountant")
-    public ResponseEntity<Ksiegowy> dodajKsiegowego(@RequestBody String object){
-        JsonObject jsonObject = JsonParser.parseString(object)
-                .getAsJsonObject();
-        String name = jsonObject.get("Nazwa").toString();
-        int id = jsonObject.get("IdOrg").getAsInt();
-        try {
-            Organizacje.get(id);
-        } catch (IndexOutOfBoundsException ex){
-            return ResponseEntity.notFound().build();
-        }
-        Ksiegowy ksiegowy = new Ksiegowy(name.substring(1, name.length() - 1));
-        if (Organizacje.get(id).dodajKsiegowego(ksiegowy)) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(ksiegowy);
-        }
-        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(ksiegowy);
-    }
-
-    @PostMapping("/Adm/Add")
+    @PostMapping("/adminapk")
     public ResponseEntity<AdministratorAPK> dodajAdministratoraAPK(@RequestBody String object){
         AdministratorAPK admin = new AdministratorAPK(object);
         Administratorzy.add(admin);
         return ResponseEntity.status(HttpStatus.CREATED).body(admin);
     }
 
-    @PostMapping("/Doc")
+    @PostMapping("/document")
     public ResponseEntity<Dokument> dodajDokument(@RequestBody String object){
         JsonObject jsonObject = JsonParser.parseString(object)
                 .getAsJsonObject();
@@ -129,7 +113,25 @@ public class Aplikacja {
         return ResponseEntity.status(HttpStatus.CREATED).body(dokument);
     }
 
-    @GetMapping("/User")
+    @PostMapping("/accountant")
+    public ResponseEntity<Ksiegowy> dodajKsiegowego(@RequestBody String object){
+        JsonObject jsonObject = JsonParser.parseString(object)
+                .getAsJsonObject();
+        String name = jsonObject.get("Nazwa").toString();
+        int id = jsonObject.get("IdOrg").getAsInt();
+        try {
+            Organizacje.get(id);
+        } catch (IndexOutOfBoundsException ex){
+            return ResponseEntity.notFound().build();
+        }
+        Ksiegowy ksiegowy = new Ksiegowy(name.substring(1, name.length() - 1));
+        if (Organizacje.get(id).dodajKsiegowego(ksiegowy)) {
+            return ResponseEntity.status(HttpStatus.CREATED).body(ksiegowy);
+        }
+        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(ksiegowy);
+    }
+
+    @GetMapping("/user")
     public ResponseEntity<Pracownik> getPracownik(@RequestBody String object){
         JsonObject jsonObject = JsonParser.parseString(object)
                 .getAsJsonObject();
@@ -145,21 +147,6 @@ public class Aplikacja {
         return ResponseEntity.notFound().build();
     }
 
-    @GetMapping("/accountant")
-    public ResponseEntity<Ksiegowy> getKsiegowy(@RequestBody String object){
-        JsonObject jsonObject = JsonParser.parseString(object)
-                .getAsJsonObject();
-        int idOrg = jsonObject.get("IdOrg").getAsInt();
-        int idKsieg = jsonObject.get("IdKsieg").getAsInt();
-        Ksiegowy ksiegowy;
-        for(int i = 0; i < Organizacje.size(); i++) {
-            if(Organizacje.get(i).getId()==idOrg) {
-                ksiegowy = Organizacje.get(i).getKsiegowy(idKsieg);
-                return new ResponseEntity<>(ksiegowy, HttpStatus.OK);
-            }
-        }
-        return ResponseEntity.notFound().build();
-    }
 
     //Funkcja do zapisu danych w formacie json w folderze Data
     // https://stackoverflow.com/questions/51762784/call-a-method-before-the-java-program-closes
@@ -173,25 +160,25 @@ public class Aplikacja {
             fw.write(org);
             fw.close();
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
         }
         
         String adm = gson.toJson(Administratorzy);
-        try (FileWriter fw = new FileWriter("src/main/java/com/example/backend/util/Data/administratorzy.json")) {
+        try (FileWriter fw = new FileWriter("src/main/java/com/example/backend/util/Data/organizacje.json")) {
             fw.write(adm);
             fw.close();
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
         }
         
         System.out.println("Data saved.");
     } // cos nie dziala?
 
     //Funkcja do wczytywania danych w formacie json z folderu Data, uruchamiana przy wlaczeniu sie aplikacji
-    private void readDataFromJson() throws IOException {
+    private void readDataFromJson(){
         Gson gson = new Gson();
         
-        String org = new String("src/main/java/com/example/backend/util/Data/organizacje.json");
+        String org = "src/main/java/com/example/backend/util/Data/organizacje.json";
         try (JsonReader reader = new JsonReader(new FileReader(org))) {
             Organizacja[] data = gson.fromJson(reader, Organizacja[].class);
             if (data.length > 0)
@@ -199,10 +186,10 @@ public class Aplikacja {
                 Organizacje = new ArrayList<Organizacja>(Arrays.asList(data));
             }
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
         }
 
-        String adm = new String("src/main/java/com/example/backend/util/Data/administratorzy.json");
+        String adm = "src/main/java/com/example/backend/util/Data/organizacje.json";
         try (JsonReader reader = new JsonReader(new FileReader(adm))) {
             AdministratorAPK[] data = gson.fromJson(reader, AdministratorAPK[].class);
             if (data.length > 0)
@@ -210,7 +197,7 @@ public class Aplikacja {
                 Administratorzy = new ArrayList<AdministratorAPK>(Arrays.asList(data));
             }
         } catch (Exception e) {
-            throw e;
+            e.printStackTrace();
         }
     }
 }
