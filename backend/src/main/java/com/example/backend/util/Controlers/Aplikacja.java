@@ -28,30 +28,30 @@ public class Aplikacja {
         Organizacje = new ArrayList<>();
         Administratorzy = new ArrayList<>();
 
-//        try {
-//            readDataFromJson();
-//        } catch (Exception e) {
-//            System.out.println(e.getMessage());
-//        }
+       try {
+           readDataFromJson();
+       } catch (Exception e) {
+           System.out.println(e.getMessage());
+       }
 
 
-        // Runtime uzywany do wywolywania funkcji przy wylaczaniu sie aplikacji:
-//        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-//            public void run() {
-//                try {
-//                   saveDataToJson();
-//                } catch (IOException e) {
-//                   throw new RuntimeException(e);
-//                }
-//            }
-//        }));
+       // Runtime uzywany do wywolywania funkcji przy wylaczaniu sie aplikacji:
+       Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+           public void run() {
+               try {
+                  saveDataToJson();
+               } catch (IOException e) {
+                  throw new RuntimeException(e);
+               }
+           }
+       }));
     }
 
     @PostMapping("/organization")
     public ResponseEntity<Organizacja> dodajOrganizacje(@RequestBody String nazwa) {
         Organizacja org = new Organizacja(nazwa);
         Organizacje.add(org);
-        System.out.println(Organizacje.get(org.getId()).getNazwa()+"  "+Organizacje.get(org.getId()).getId());
+        //System.out.println(Organizacje.get(org.getId()).getNazwa()+"  "+Organizacje.get(org.getId()).getId());
         return ResponseEntity.status(HttpStatus.CREATED).body(org);
     }
 
@@ -200,15 +200,30 @@ public class Aplikacja {
         }
         
         String adm = gson.toJson(Administratorzy);
-        try (FileWriter fw = new FileWriter("src/main/java/com/example/backend/util/Data/organizacje.json")) {
+        try (FileWriter fw = new FileWriter("src/main/java/com/example/backend/util/Data/administratorzy.json")) {
             fw.write(adm);
             fw.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        
+      
+        JsonObject counters = new JsonObject();
+        counters.addProperty("AdmApkCount", AdministratorAPK.getCount());
+        counters.addProperty("AdmOrgCount", AdministratorOrg.getCount());
+        counters.addProperty("DokumentCount", Dokument.getCount());
+        counters.addProperty("KsiegowyCount", Ksiegowy.getCount());
+        counters.addProperty("OrganizacjaCount", Organizacja.getCount());
+        counters.addProperty("PracownikCount", Pracownik.getCount());
+        counters.addProperty("WykresCount", Wykres.getCount());
+        try (FileWriter fw = new FileWriter("src/main/java/com/example/backend/util/Data/counters.json")) {
+            fw.write(counters.toString());
+            fw.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         System.out.println("Data saved.");
-    } // cos nie dziala?
+    } 
 
     //Funkcja do wczytywania danych w formacie json z folderu Data, uruchamiana przy wlaczeniu sie aplikacji
     private void readDataFromJson(){
@@ -232,6 +247,41 @@ public class Aplikacja {
             {
                 Administratorzy = new ArrayList<AdministratorAPK>(Arrays.asList(data));
             }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        String countPath = "src/main/java/com/example/backend/util/Data/counters.json";
+        try (JsonReader reader = new JsonReader(new FileReader(countPath))) {
+            try {
+            JsonObject counts = JsonParser.parseReader(reader).getAsJsonObject();
+            
+            int tempCount;
+            tempCount = counts.get("AdmApkCount").getAsInt();
+            AdministratorAPK.setCount(tempCount);
+
+            tempCount = counts.get("AdmOrgCount").getAsInt();
+            AdministratorOrg.setCount(tempCount);
+
+            tempCount = counts.get("DokumentCount").getAsInt();
+            Dokument.setCount(tempCount);
+
+            tempCount = counts.get("KsiegowyCount").getAsInt();
+            Ksiegowy.setCount(tempCount);
+            
+            tempCount = counts.get("OrganizacjaCount").getAsInt();
+            Organizacja.setCount(tempCount);
+            
+            tempCount = counts.get("PracownikCount").getAsInt();
+            Pracownik.setCount(tempCount);
+
+            tempCount = counts.get("WykresCount").getAsInt();
+            Wykres.setCount(tempCount);
+
+            } catch (Exception e) {
+                System.out.println("Failed to parse counters");
+            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }

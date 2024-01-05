@@ -25,6 +25,14 @@ public class Organizacja {
         Raporty = new ArrayList<>();
     }
 
+    public static void setCount(int newCount) {
+        count = newCount;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
     public int getId(){
         return this.Id;
     }

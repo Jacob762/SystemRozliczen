@@ -11,6 +11,14 @@ public class Wykres {
         count++;
     }
 
+    public static void setCount(int newCount) {
+        count = newCount;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
     public int getId(){
         return this.Id;
     }

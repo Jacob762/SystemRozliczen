@@ -9,6 +9,14 @@ public class Pracownik {
         this.Id = count++;
     }
 
+    public static void setCount(int newCount) {
+        count = newCount;
+    }
+
+    public static int getCount() {
+        return count;
+    }
+
     public String getNazwa(){
         return this.Nazwa;
     }
