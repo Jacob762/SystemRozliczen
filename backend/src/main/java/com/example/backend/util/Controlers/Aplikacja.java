@@ -47,6 +47,11 @@ public class Aplikacja {
 //       }));
     }
 
+    @GetMapping("/health")
+    public ResponseEntity<String> health() {
+        return ResponseEntity.status(HttpStatus.OK).body("OK");
+    }
+
     @PostMapping("/organization")
     public ResponseEntity<Organizacja> dodajOrganizacje(@RequestBody String nazwa) {
         Organizacja org = new Organizacja(nazwa);
