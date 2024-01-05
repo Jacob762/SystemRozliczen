@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
+import org.apache.catalina.connector.Response;
 import org.aspectj.weaver.ast.Or;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -147,6 +148,41 @@ public class Aplikacja {
         return ResponseEntity.notFound().build();
     }
 
+    @DeleteMapping("/accountant")
+    public ResponseEntity<Ksiegowy> deleteKsiegowy(@RequestBody String object) {
+        JsonObject jsonObject = JsonParser.parseString(object)
+                .getAsJsonObject();
+        int idOrg = jsonObject.get("IdOrg").getAsInt();
+        int idKsieg = jsonObject.get("IdKsieg").getAsInt();
+        Ksiegowy ksiegowy;
+        // search for organizacja with IdOrg
+        for (int i = 0; i < Organizacje.size(); i++) {
+            if (Organizacje.get(i).getId() == idOrg) {
+                ksiegowy = Organizacje.get(i).getKsiegowy(idKsieg);
+                if (ksiegowy != null) {
+                    Organizacje.get(i).usunKsiegowego(idKsieg);
+                }
+            }
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/accountant")
+    public ResponseEntity<Ksiegowy> getKsiegowy(@RequestBody String object){
+        JsonObject jsonObject = JsonParser.parseString(object)
+                .getAsJsonObject();
+        int idOrg = jsonObject.get("IdOrg").getAsInt();
+        int idKsieg = jsonObject.get("IdKsieg").getAsInt();
+        Ksiegowy ksiegowy;
+        for(int i = 0; i < Organizacje.size(); i++) {
+            if(Organizacje.get(i).getId()==idOrg) {
+                ksiegowy = Organizacje.get(i).getKsiegowy(idKsieg);
+                return new ResponseEntity<>(ksiegowy, HttpStatus.OK);
+            }
+        }
+        return ResponseEntity.notFound().build();
+    }
 
     //Funkcja do zapisu danych w formacie json w folderze Data
     // https://stackoverflow.com/questions/51762784/call-a-method-before-the-java-program-closes
