@@ -28,23 +28,23 @@ public class Aplikacja {
         Organizacje = new ArrayList<>();
         Administratorzy = new ArrayList<>();
 
-       try {
-           readDataFromJson();
-       } catch (Exception e) {
-           System.out.println(e.getMessage());
-       }
+//       try {
+//           readDataFromJson();
+//       } catch (Exception e) {
+//           System.out.println(e.getMessage());
+//       }
 
 
        // Runtime uzywany do wywolywania funkcji przy wylaczaniu sie aplikacji:
-       Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-           public void run() {
-               try {
-                  saveDataToJson();
-               } catch (IOException e) {
-                  throw new RuntimeException(e);
-               }
-           }
-       }));
+//       Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
+//           public void run() {
+//               try {
+//                  saveDataToJson();
+//               } catch (IOException e) {
+//                  throw new RuntimeException(e);
+//               }
+//           }
+//       }));
     }
 
     @PostMapping("/organization")
@@ -241,6 +241,7 @@ public class Aplikacja {
         }
 
         String adm = "src/main/java/com/example/backend/util/Data/organizacje.json";
+
         try (JsonReader reader = new JsonReader(new FileReader(adm))) {
             AdministratorAPK[] data = gson.fromJson(reader, AdministratorAPK[].class);
             if (data.length > 0)
