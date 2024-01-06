@@ -1,6 +1,5 @@
 import { ArrowRightIcon } from 'lucide-react';
 import { Metadata } from 'next';
-import Image from 'next/image';
 import Link from 'next/link';
 import { css } from 'styled-system/css';
 import { center, flex } from 'styled-system/patterns';
