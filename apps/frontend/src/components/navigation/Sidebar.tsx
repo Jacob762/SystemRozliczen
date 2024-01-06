@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import { css } from 'styled-system/css';
-import { Divider, Stack } from 'styled-system/jsx';
-import { stack } from 'styled-system/patterns';
+import { Divider } from 'styled-system/jsx';
+import Links from './Links';
 
 export default function Sidebar() {
   return (
@@ -29,17 +29,7 @@ export default function Sidebar() {
         <Divider className={css({ my: '10' })} />
       </div>
       <nav>
-        <ul className={stack()}>
-          <li>
-            <a href="/">Dashboard</a>
-          </li>
-          <li>
-            <a href="/documents">Dokumenty</a>
-          </li>
-          <li>
-            <a href="/admin">Panel administracyjny</a>
-          </li>
-        </ul>
+        <Links />
       </nav>
     </header>
   );
