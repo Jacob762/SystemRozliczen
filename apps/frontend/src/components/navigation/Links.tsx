@@ -1,6 +1,6 @@
 'use client';
 
-import { Files, Home, Shield } from 'lucide-react';
+import {Files, Home, Shield, ShieldXIcon} from 'lucide-react';
 import NextLink from 'next/link';
 import { stack } from 'styled-system/patterns';
 import { Link } from '../ui/link';
@@ -18,6 +18,11 @@ const links = [
     name: 'Panel administracyjny',
     href: '/dashboard/admin',
     icon: Shield,
+  },
+  {
+    name : 'Panel ksiegowego',
+    href: '/dashboard/accountant',
+    icon: ShieldXIcon,
   },
 ];
 
