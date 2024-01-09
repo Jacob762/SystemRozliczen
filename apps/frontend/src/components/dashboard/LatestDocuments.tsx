@@ -30,7 +30,7 @@ export default function LatestDocuments() {
       </Card.Body>
       <Card.Footer>
         <Button asChild>
-          <a href="/documents">Zobacz więcej</a>
+          <a href="/dashboard/documents">Zobacz więcej</a>
         </Button>
       </Card.Footer>
     </Card.Root>
