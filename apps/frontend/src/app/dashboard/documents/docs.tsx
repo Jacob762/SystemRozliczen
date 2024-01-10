@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import Document from '~/components/dashboard/Document';
-import { getDocuments } from './getDocuments';
+import { getDocuments } from '../../../api/getDocuments';
 
 export default function Docs(props: { documents: any }) {
   const { data } = useQuery({

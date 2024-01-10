@@ -1,8 +1,18 @@
+'use client';
+
+import { useQuery } from '@tanstack/react-query';
+import { getDocuments } from '~/api/getDocuments';
 import * as Card from '~/components/ui/card';
 import { Button } from '../ui/button';
 import * as Table from '../ui/table';
 
-export default function LatestDocuments() {
+export default function LatestDocuments(props: { documents: any }) {
+  const { data } = useQuery({
+    queryKey: ['documents'],
+    queryFn: getDocuments,
+    initialData: props.documents,
+  });
+
   return (
     <Card.Root width="lg">
       <Card.Header>
@@ -18,11 +28,13 @@ export default function LatestDocuments() {
             </Table.Row>
           </Table.Head>
           <Table.Body>
-            {documentData.map((document, index) => (
-              <Table.Row key={index}>
+            {data.slice(0, 5).map((document: any) => (
+              <Table.Row key={document.id}>
                 <Table.Cell fontWeight="medium">{document.id}</Table.Cell>
-                <Table.Cell>{document.name}</Table.Cell>
-                <Table.Cell>{document.date}</Table.Cell>
+                <Table.Cell>{document.nazwa}</Table.Cell>
+                <Table.Cell>
+                  {new Date(document.data).toISOString().split('T')[0]}
+                </Table.Cell>
               </Table.Row>
             ))}
           </Table.Body>
@@ -36,9 +48,3 @@ export default function LatestDocuments() {
     </Card.Root>
   );
 }
-
-const documentData = [
-  { id: 'FVAT/01/1', name: 'System CRM', date: '2023/11/12' },
-  { id: 'FVAT/01/2', name: 'Mapa cyfrowa', date: '2023/11/15' },
-  { id: 'FVAT/01/3', name: 'Przepis z labów', date: '2023/11/17' },
-];
