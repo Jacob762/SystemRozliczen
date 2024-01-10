@@ -2,6 +2,7 @@ import { Metadata } from 'next';
 import { css } from 'styled-system/css';
 import { Center } from 'styled-system/jsx';
 import { getAccountant } from '~/api/getAccountant';
+import { getOrganization } from '~/api/getOrganization';
 import Dashboard from './dashboard';
 
 export const metadata: Metadata = {
@@ -10,6 +11,7 @@ export const metadata: Metadata = {
 
 export default async function Accountant() {
   const initialData = await getAccountant();
+  const orgInitialData = await getOrganization();
 
   return (
     <>
@@ -19,7 +21,7 @@ export default async function Accountant() {
       <Center className={css({ fontSize: '2xl', fontWeight: 'bold' })}>
         Panel ksiegowego
       </Center>
-      <Dashboard accountant={initialData} />
+      <Dashboard accountant={initialData} organization={orgInitialData} />
     </>
   );
 }

@@ -3,8 +3,11 @@ import { Stack } from 'styled-system/jsx';
 import { Button } from '~/components/ui/button';
 import * as Card from '~/components/ui/card';
 
-export default function AccountantDashboard(props: { accountant: any }) {
-  const { accountant } = props;
+export default function AccountantDashboard(props: {
+  accountant: any;
+  organization: any;
+}) {
+  const { accountant, organization } = props;
 
   return (
     <Card.Root width="lg">
@@ -22,7 +25,7 @@ export default function AccountantDashboard(props: { accountant: any }) {
           {/* todo wyszukanie liczby dokumentow w backendzie */}
           <div className={css({ flex: '1' })}>
             <Card.Title>Organizacja</Card.Title>
-            <Card.Description>Fundacja x</Card.Description>
+            <Card.Description>{organization.nazwa}</Card.Description>
           </div>
           <div className={css({ flex: '1' })}>
             <Button asChild>
