@@ -19,9 +19,8 @@ export default async function Documents() {
       </h1>
       <Center className={css({ fontSize: '2xl', fontWeight: 'bold' })}></Center>
       <Stack>
-        {/*/document/{idOrg} - getDokumenty*/}
-        <Button>Sortuj po kwocie</Button>{' '}
-        {/*/document/sort/{id} - idOrganizacji*/}
+        {/*/document/{idOrg} - getDokumenty, DocumentController*/}
+        <Button>Sortuj po dacie</Button>{' '}
         <Docs documents={initialData} />
       </Stack>
     </>

@@ -14,7 +14,7 @@ export default function AccountantDashboard(props: {
       <Card.Header>
         <Card.Title>Witaj {accountant.nazwa}</Card.Title>{' '}
         {/* jako x dodajemy id dokumentu*/}
-        <Card.Description>{accountant.id}</Card.Description>
+        <Card.Description>ID : {accountant.id}</Card.Description>
       </Card.Header>
       <Card.Body>
         <Stack direction="row" gap="4">
@@ -31,7 +31,7 @@ export default function AccountantDashboard(props: {
             <Button asChild>
               <a>Dodaj dokument</a>
             </Button>{' '}
-            {/* todo - przycisk do dodawania dokumentow*/}
+            {/* todo - przycisk do dodawania dokumentow, DocumentController dodajDokument(String object)*/}
           </div>
         </Stack>
       </Card.Body>

@@ -22,12 +22,18 @@ export default function Document(props: { document: any }) {
             <Card.Title>Księgowy</Card.Title>
             <Card.Description>{document.autor.nazwa}</Card.Description>
           </div>
-          <div className={css({ flex: '1' })}>
-            <Button asChild>
-              <a>Pobierz plik</a>
-            </Button>{' '}
-            {/* todo - przycisk do pobierania plikow*/}
-          </div>
+          <Stack direction="column" gap="2">
+            <div className={css({ flex: '1' })}>
+              <Button asChild>
+                <a>Usuń dokument</a>
+              </Button> {/* todo DELETE :   /document/{idOrg}/{id}   gdzie idOrg - id organizacji, id - id dokumentu, DocumentController*/}
+            </div>
+            <div className={css({ flex: '1' })}>
+              <Button asChild>
+                <a>Edytuj dokument</a>
+              </Button>{/* todo POST :   /document/edit - tu wymagany string z json, przekazywane dalej do funkcji dodaj_dokument, DocumentController*/}
+            </div>
+          </Stack>
         </Stack>
       </Card.Body>
     </Card.Root>

@@ -6,6 +6,7 @@ import { getAccountant } from '~/api/getAccountant';
 import { getOrganization } from '~/api/getOrganization';
 import AccountantDashboard from '~/components/dashboard/Accountant/AccountantDashboard';
 
+
 export default function Dashboard(props: {
   accountant: any;
   organization: any;
@@ -25,7 +26,6 @@ export default function Dashboard(props: {
   return (
     <Stack direction="column" gap="4">
       <AccountantDashboard accountant={data} organization={orgData} />
-
     </Stack>
   );
 }

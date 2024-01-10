@@ -20,7 +20,6 @@ export default function Statistics() {
               <Card.Title>Liczba dokumentow</Card.Title>
               <Card.Description>123</Card.Description>
             </div>{' '}
-            {/*/document/liczba/{idOrg}*/}
             <div className={css({ flex: '1' })}>
               <Card.Title>Użytkownicy</Card.Title>
               <Card.Description>123</Card.Description>
@@ -35,7 +34,7 @@ export default function Statistics() {
               <Card.Title>Laczna kwota</Card.Title>
               <Card.Description>123</Card.Description>
             </div>{' '}
-            {/*statystyka/total statystyka*/}
+            {/*statystyka/{id} ,gdzie id to id organizacji, zwraca string ze wszystkimi danymi potrzebnymi do uzupelnienia, StatystykaController*/}
           </Stack>
         </Stack>
       </Card.Body>

@@ -51,7 +51,6 @@ public class Aplikacja {
     public ResponseEntity<String> health() {
         return ResponseEntity.status(HttpStatus.OK).body("OK");
     }
-
     //Funkcja do zapisu danych w formacie json w folderze Data
     // https://stackoverflow.com/questions/51762784/call-a-method-before-the-java-program-closes
     private void saveDataToJson() throws IOException {

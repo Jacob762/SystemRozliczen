@@ -40,6 +40,14 @@ public class Organizacja {
         for(int i=0;i< Pracownicy.size();i++) if(Pracownicy.get(i).getId()==index) return Pracownicy.get(i);
         return null;
     }
+
+    public int getKsiegowiSize(){
+        return Ksiegowi.size();
+    }
+
+    public int getPracownicySize(){
+        return Pracownicy.size();
+    }
     public Dokument getDokument(int index){
         for(int i=0;i< Dokumenty.size();i++) if(Dokumenty.get(i).getId()==index) return Dokumenty.get(i);
         return null;
