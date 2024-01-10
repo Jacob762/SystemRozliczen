@@ -5,8 +5,6 @@ import { Stack } from 'styled-system/jsx';
 import { getAccountant } from '~/api/getAccountant';
 import { getOrganization } from '~/api/getOrganization';
 import AccountantDashboard from '~/components/dashboard/Accountant/AccountantDashboard';
-import AccountantDeleteDashboard from '~/components/dashboard/Accountant/AccountantDeleteDashboard';
-import AccountantEditDocument from '~/components/dashboard/Accountant/AccountantEditDocument';
 
 export default function Dashboard(props: {
   accountant: any;
@@ -27,8 +25,7 @@ export default function Dashboard(props: {
   return (
     <Stack direction="column" gap="4">
       <AccountantDashboard accountant={data} organization={orgData} />
-      <AccountantEditDocument />
-      <AccountantDeleteDashboard />
+
     </Stack>
   );
 }

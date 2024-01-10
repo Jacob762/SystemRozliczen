@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { css } from 'styled-system/css';
 import { Center, Stack } from 'styled-system/jsx';
-import { getDocuments } from '~/api/getDocuments';
+import { getDocuments, sortDocuments} from '~/api/getDocuments';
 import { Button } from '~/components/ui/button';
 import Docs from './docs';
 
