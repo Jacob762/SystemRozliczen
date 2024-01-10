@@ -1,6 +1,7 @@
 import { Metadata } from 'next';
 import { css } from 'styled-system/css';
-import { Center, Flex, Stack } from 'styled-system/jsx';
+import { Stack } from 'styled-system/jsx';
+import { getDocuments } from '~/api/getDocuments';
 import LatestDocuments from '~/components/dashboard/LatestDocuments';
 import Statistics from '~/components/dashboard/Statistics';
 
@@ -8,7 +9,9 @@ export const metadata: Metadata = {
   title: 'Dashboard',
 };
 
-export default function Dashboard() {
+export default async function Dashboard() {
+  const initialData = await getDocuments();
+
   return (
     <>
       <h1 className={css({ fontSize: '4xl', fontWeight: 'bold', py: '5' })}>
@@ -19,7 +22,7 @@ export default function Dashboard() {
         className={css({ fontSize: '2xl', fontWeight: 'bold' })}
       >
         <Statistics />
-        <LatestDocuments />
+        <LatestDocuments documents={initialData} />
       </Stack>
     </>
   );

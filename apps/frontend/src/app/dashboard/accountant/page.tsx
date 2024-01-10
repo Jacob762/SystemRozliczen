@@ -1,15 +1,18 @@
 import { Metadata } from 'next';
 import { css } from 'styled-system/css';
-import { Center, Stack } from 'styled-system/jsx';
-import AccountantDashboard from '~/components/dashboard/Accountant/AccountantDashboard';
-import AccountantDeleteDashboard from '~/components/dashboard/Accountant/AccountantDeleteDashboard';
-import AccountantEditDocument from '~/components/dashboard/Accountant/AccountantEditDocument';
+import { Center } from 'styled-system/jsx';
+import { getAccountant } from '~/api/getAccountant';
+import { getOrganization } from '~/api/getOrganization';
+import Dashboard from './dashboard';
 
 export const metadata: Metadata = {
   title: 'Accountant',
 };
 
-export default function Accountant() {
+export default async function Accountant() {
+  const initialData = await getAccountant();
+  const orgInitialData = await getOrganization();
+
   return (
     <>
       <h1 className={css({ fontSize: '4xl', fontWeight: 'bold' })}>
@@ -18,11 +21,7 @@ export default function Accountant() {
       <Center className={css({ fontSize: '2xl', fontWeight: 'bold' })}>
         Panel ksiegowego
       </Center>
-      <Stack direction="column" gap="4">
-        <AccountantDashboard />
-        <AccountantEditDocument />
-        <AccountantDeleteDashboard />
-      </Stack>
+      <Dashboard accountant={initialData} organization={orgInitialData} />
     </>
   );
 }

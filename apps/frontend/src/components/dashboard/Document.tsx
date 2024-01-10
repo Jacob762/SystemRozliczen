@@ -3,23 +3,24 @@ import { Stack } from 'styled-system/jsx';
 import { Button } from '~/components/ui/button';
 import * as Card from '~/components/ui/card';
 
-export default function Document() {
+export default function Document(props: { document: any }) {
+  const { document } = props;
+
   return (
     <Card.Root width="mg">
       <Card.Header>
-        <Card.Title>Dokument nr {'x'}</Card.Title>{' '}
-        {/* jako x dodajemy id dokumentu*/}
-        <Card.Description>Nazwa dokumentu</Card.Description>
+        <Card.Title>Dokument nr {document.id}</Card.Title>{' '}
+        <Card.Description>{document.nazwa}</Card.Description>
       </Card.Header>
       <Card.Body>
         <Stack direction="row" gap="4">
           <div className={css({ flex: '1' })}>
             <Card.Title>Kwota</Card.Title>
-            <Card.Description>26.99</Card.Description>
+            <Card.Description>{document.kwota}</Card.Description>
           </div>
           <div className={css({ flex: '1' })}>
-            <Card.Title>Ksiegowy</Card.Title>
-            <Card.Description>Grzegorz Malecki</Card.Description>
+            <Card.Title>Księgowy</Card.Title>
+            <Card.Description>{document.autor.nazwa}</Card.Description>
           </div>
           <div className={css({ flex: '1' })}>
             <Button asChild>
