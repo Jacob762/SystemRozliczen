@@ -3,13 +3,15 @@ import { Stack } from 'styled-system/jsx';
 import { Button } from '~/components/ui/button';
 import * as Card from '~/components/ui/card';
 
-export default function AccountantDashboard() {
+export default function AccountantDashboard(props: { accountant: any }) {
+  const { accountant } = props;
+
   return (
     <Card.Root width="lg">
       <Card.Header>
-        <Card.Title>Witaj {'nazwa ksiegowego'}</Card.Title>{' '}
+        <Card.Title>Witaj {accountant.nazwa}</Card.Title>{' '}
         {/* jako x dodajemy id dokumentu*/}
-        <Card.Description>{'id'}</Card.Description>
+        <Card.Description>{accountant.id}</Card.Description>
       </Card.Header>
       <Card.Body>
         <Stack direction="row" gap="4">
