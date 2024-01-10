@@ -1,8 +1,9 @@
 import { Metadata } from 'next';
 import { css } from 'styled-system/css';
-import { Center, Flex, Stack } from 'styled-system/jsx';
+import { Center, Stack } from 'styled-system/jsx';
 import Document from '~/components/dashboard/Document';
 import { Button } from '~/components/ui/button';
+
 export const metadata: Metadata = {
   title: 'Dokumenty',
 };

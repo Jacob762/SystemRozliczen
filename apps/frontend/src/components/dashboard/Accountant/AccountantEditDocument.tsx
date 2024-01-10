@@ -1,8 +1,7 @@
-import { css } from '../../../../styled-system/css';
-import { Stack } from '../../../../styled-system/jsx';
-import * as Card from '~/components/ui/card';
-import { red } from 'next/dist/lib/picocolors';
+import { css } from 'styled-system/css';
+import { Stack } from 'styled-system/jsx';
 import { Button } from '~/components/ui/button';
+import * as Card from '~/components/ui/card';
 
 export default function AccountantEditDocument() {
   return (
