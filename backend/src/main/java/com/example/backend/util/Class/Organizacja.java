@@ -3,7 +3,7 @@ package com.example.backend.util.Class;
 import java.util.*;
 
 public class Organizacja {
-    public List<Dokument> Dokumenty;
+    public List<Dokument> Dokumenty; ///todo zamienic na funkcje, ktora zwraca, zamiast udostepniac zmienna
     private List<AdministratorOrg> Administratorzy;
     private List<Ksiegowy> Ksiegowi;
     private List<Pracownik> Pracownicy;
@@ -48,6 +48,7 @@ public class Organizacja {
     public int getPracownicySize(){
         return Pracownicy.size();
     }
+    public int getDokumentySize(){return Dokumenty.size();}
     public Dokument getDokument(int index){
         for(int i=0;i< Dokumenty.size();i++) if(Dokumenty.get(i).getId()==index) return Dokumenty.get(i);
         return null;
