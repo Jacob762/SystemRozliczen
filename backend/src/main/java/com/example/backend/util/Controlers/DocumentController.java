@@ -39,7 +39,7 @@ public class DocumentController {
         String name = jsonObject.get("Nazwa").toString();
         int idKsiegowy = jsonObject.get("IdK").getAsInt();
         float kwota = jsonObject.get("Kwota").getAsFloat();
-        int idOrg = jsonObject.get("IdO").getAsInt();
+        int idOrg = jsonObject.get("idO").getAsInt();
         Organizacja org = Organizacje.get(0);
         Ksiegowy ksiegowy = org.getKsiegowy(0);
         Dokument dokument;

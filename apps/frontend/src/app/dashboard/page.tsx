@@ -18,7 +18,8 @@ export default async function Dashboard() {
         {metadata.title as string}
       </h1>
       <Stack
-        direction="column"
+        direction="row"
+        gap="5"
         className={css({ fontSize: '2xl', fontWeight: 'bold' })}
       >
         <Statistics />
