@@ -45,4 +45,6 @@ public class Dokument {
     public float getKwota(){
         return this.Kwota;
     }
+    public void setKwota(float kwota){this.Kwota = kwota;}
+    public void setNazwa(String nazwa){this.Nazwa=nazwa;}
 }

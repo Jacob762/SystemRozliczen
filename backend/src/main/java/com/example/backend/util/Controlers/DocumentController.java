@@ -16,20 +16,22 @@ import static com.example.backend.util.Controlers.Aplikacja.Organizacje;
 @RestController
 @RequestMapping("/document")
 public class DocumentController {
-    @PostMapping("/edit")
+    @PostMapping("/edit") ///todo zmienic na set zamiast dodawania nowego
     public ResponseEntity<Dokument> edytujDokument(@RequestBody String object){
         JsonObject jsonObject = JsonParser.parseString(object)
                 .getAsJsonObject();
         int id = jsonObject.get("idO").getAsInt();
         int idDok = jsonObject.get("idDok").getAsInt();
+        float nowaKwota = jsonObject.get("kwota").getAsFloat();
+        String nowaNazwa = jsonObject.get("nazwa").getAsString();
         for(Organizacja organizacja : Organizacje){
             if(organizacja.getId()==id){
-                if(!organizacja.usunDokument(organizacja.getDokument(idDok))){
-                    return ResponseEntity.status(HttpStatus.BAD_GATEWAY).build();
-                }
+                organizacja.getDokument(idDok).setKwota(nowaKwota);
+                organizacja.getDokument(idDok).setNazwa(nowaNazwa);
+                return ResponseEntity.status(HttpStatus.OK).build();
             }
         }
-        return dodajDokument(object);
+        return ResponseEntity.notFound().build();
     }
 
     @PostMapping() ///todo we froncie najpierw getksiegowy, wywolac jesli inne niz notfound

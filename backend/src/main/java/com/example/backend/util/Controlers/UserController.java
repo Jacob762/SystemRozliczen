@@ -1,5 +1,6 @@
 package com.example.backend.util.Controlers;
 
+import com.example.backend.util.Class.Organizacja;
 import com.example.backend.util.Class.Pracownik;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -18,15 +19,19 @@ public class UserController {
                 .getAsJsonObject();
         String name = jsonObject.get("Nazwa").toString();
         int id = jsonObject.get("IdOrg").getAsInt();
+        Pracownik pracownik = new Pracownik(name.substring(1, name.length() - 1));
         try {
-            Organizacje.get(id); ///todo szukanie id organizacji
+            for(Organizacja org : Organizacje){
+                if (org.getId()==id){
+                    if(org.dodajPracownika(pracownik)) {
+                        return ResponseEntity.status(HttpStatus.CREATED).body(pracownik);
+                    }
+                }
+            }
         } catch (IndexOutOfBoundsException ex){
             return ResponseEntity.notFound().build();
         }
-        Pracownik pracownik = new Pracownik(name.substring(1, name.length() - 1));
-        if(Organizacje.get(id).dodajPracownika(pracownik)) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(pracownik);
-        }
+
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(pracownik);
     }
 

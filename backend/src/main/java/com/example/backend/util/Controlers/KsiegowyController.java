@@ -1,6 +1,7 @@
 package com.example.backend.util.Controlers;
 
 import com.example.backend.util.Class.Ksiegowy;
+import com.example.backend.util.Class.Organizacja;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.springframework.http.HttpStatus;
@@ -18,15 +19,18 @@ public class KsiegowyController {
                 .getAsJsonObject();
         String name = jsonObject.get("Nazwa").toString();
         int id = jsonObject.get("IdOrg").getAsInt();
+        Ksiegowy ksiegowy = new Ksiegowy(name.substring(1, name.length() - 1));
         System.out.println(id);
         try {
-            Organizacje.get(id); ///todo szukanie organizacji po id
+            for(Organizacja org : Organizacje){
+                if (org.getId()==id){
+                    if (org.dodajKsiegowego(ksiegowy)) {
+                        return ResponseEntity.status(HttpStatus.CREATED).body(ksiegowy);
+                    }
+                }
+            }
         } catch (IndexOutOfBoundsException ex){
             return ResponseEntity.notFound().build();
-        }
-        Ksiegowy ksiegowy = new Ksiegowy(name.substring(1, name.length() - 1));
-        if (Organizacje.get(id).dodajKsiegowego(ksiegowy)) {
-            return ResponseEntity.status(HttpStatus.CREATED).body(ksiegowy);
         }
         return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(ksiegowy);
     }
