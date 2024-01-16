@@ -41,6 +41,10 @@ public class Organizacja {
         return null;
     }
 
+    public int getAdministratorSize() {
+        return Administratorzy.size();
+    }
+
     public int getKsiegowiSize(){
         return Ksiegowi.size();
     }
