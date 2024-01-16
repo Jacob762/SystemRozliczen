@@ -66,7 +66,7 @@ class BackendApplicationTests {
     }
     @Test
     void dodaj_dokument_test_success() throws JsonProcessingException {
-        String object = "{\"Nazwa\" : \"MockDoc\", \"Kwota\" : 2137.99, \"IdK\" : 0, \"IdO\" : 0}";
+        String object = "{\"Nazwa\" : \"MockDoc\", \"Kwota\" : 2137.99, \"IdK\" : 0, \"idO\" : 0}";
 
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
