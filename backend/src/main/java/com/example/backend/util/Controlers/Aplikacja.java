@@ -96,7 +96,7 @@ public class Aplikacja {
     private void readDataFromJson(){
         Gson gson = new Gson();
         
-        String org = "backend/src/main/java/com/example/backend/util/Data/organizacje.json";
+        String org = "src/main/java/com/example/backend/util/Data/organizacje.json";
         try (JsonReader reader = new JsonReader(new FileReader(org))) {
             Organizacja[] data = gson.fromJson(reader, Organizacja[].class);
             if (data.length > 0)
@@ -107,7 +107,7 @@ public class Aplikacja {
             e.printStackTrace();
         }
 
-        String adm = "backend/src/main/java/com/example/backend/util/Data/administratorzy.json";
+        String adm = "src/main/java/com/example/backend/util/Data/administratorzy.json";
 
         try (JsonReader reader = new JsonReader(new FileReader(adm))) {
             AdministratorAPK[] data = gson.fromJson(reader, AdministratorAPK[].class);
@@ -119,7 +119,7 @@ public class Aplikacja {
             e.printStackTrace();
         }
 
-        String countPath = "backend/src/main/java/com/example/backend/util/Data/counters.json";
+        String countPath = "src/main/java/com/example/backend/util/Data/counters.json";
         try (JsonReader reader = new JsonReader(new FileReader(countPath))) {
             try {
             JsonObject counts = JsonParser.parseReader(reader).getAsJsonObject();

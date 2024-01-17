@@ -53,5 +53,24 @@ class AdministratorOrgControllerTests {
         AdministratorOrg returnedAdmin = organizacjaMock.getAdmin(0);
 
         assertEquals("Test", returnedAdmin.getNazwa());
-    } 
+    }
+    @Test
+    void dodaj_administratora_test_success() throws JsonProcessingException {
+        String nazwa = "TestAdmin";
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        HttpEntity<String> requestEntity = new HttpEntity<>(nazwa, headers);
+
+        ResponseEntity<String> response = restTemplate.postForEntity(URL + "/admin/" + nazwa + "/0", requestEntity,String.class);
+        assertEquals(HttpStatus.CREATED,response.getStatusCode());
+
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(response.getBody());
+        String retNazwa = root.path("nazwa").asText();
+
+        assertEquals(nazwa,retNazwa);
+    }
+
 }
