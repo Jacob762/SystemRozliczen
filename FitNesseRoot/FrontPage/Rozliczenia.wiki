@@ -1,0 +1,8 @@
+---
+Suite
+---
+!1 Test suite ${PAGE_NAME}
+!contents -R2 -g -p -f -h
+
+"Testy systemu rozliczen"
+!path /Users/jakubklawon/Desktop/Studia/5SEM/IO/SystemRozliczen/backend/target/classes

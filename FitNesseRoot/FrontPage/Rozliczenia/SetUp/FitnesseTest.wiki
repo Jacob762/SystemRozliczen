@@ -1,0 +1,3 @@
+!|com.example.backend.util.testyFitnesse.FitnesseTest|
+|nazwa|dodajOrg?|getNazwa?|
+|proba1|true|proba1|

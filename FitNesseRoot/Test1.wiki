@@ -1,0 +1,11 @@
+---
+Help: Test1
+---
+!***< Hidden
+
+!define TEST_SYSTEM {slim}
+!path /Users/jakubklawon/Desktop/Studia/5SEM/IO/SystemRozliczen/backend/src/main/java/com/example/backend/util/Class
+
+|Organizacja("XD")|
+|getNazwa?  |
+|"XD|
