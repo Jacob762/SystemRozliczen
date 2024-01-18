@@ -132,8 +132,8 @@ public class Organizacja {
         }
     }
 
-    public double totalStatystyka(){
-        double wynik = 0.0;
+    public float totalStatystyka(){
+        float wynik = 0.0F;
         for(Dokument dokument : Dokumenty){
             wynik+= dokument.getKwota();
         }

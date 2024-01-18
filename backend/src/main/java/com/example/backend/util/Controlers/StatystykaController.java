@@ -23,7 +23,7 @@ public class StatystykaController {
         JSONObject json = new JSONObject();
         for(Organizacja organizacja : Organizacje) {
             if(organizacja.getId()==id){
-                Double wynik = organizacja.totalStatystyka();
+                float wynik = organizacja.totalStatystyka();
                 int liczbaKsiegowych = organizacja.getKsiegowiSize();
                 int liczbaPracownikow = organizacja.getPracownicySize();
                 int dokumenty = organizacja.Dokumenty.size();
