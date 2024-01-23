@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<testResults>
+  <FitNesseVersion>v20231203</FitNesseVersion>
+  <rootPath>FrontPage.Rozliczenia.SetUp.FitnesseTest</rootPath>
+  <result>
+    <counts>
+      <right>1</right>
+      <wrong>1</wrong>
+      <ignores>0</ignores>
+      <exceptions>0</exceptions>
+    </counts>
+    <date>2024-01-18T14:56:35+01:00</date>
+    <runTimeInMillis>37</runTimeInMillis>
+    <content>&lt;div class="collapsible closed"&gt;&lt;ul&gt;&lt;li&gt;&lt;a href='#' class='expandall'&gt;Expand&lt;/a&gt;&lt;/li&gt;&lt;li&gt;&lt;a href='#' class='collapseall'&gt;Collapse&lt;/a&gt;&lt;/li&gt;&lt;/ul&gt;
+	&lt;p class="title"&gt;Included page: &lt;a href="FrontPage.Rozliczenia.SetUp"&gt;.FrontPage.Rozliczenia.SetUp&lt;/a&gt; &lt;a href="FrontPage.Rozliczenia.SetUp?edit&amp;amp;redirectToReferer=true&amp;amp;redirectAction=" class="edit"&gt;(edit)&lt;/a&gt;&lt;/p&gt;
+	&lt;div&gt;&lt;table&gt;
+	&lt;tr&gt;
+		&lt;td&gt;com.example.backend.util.testyFitnesse.SetUp&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;br/&gt;&lt;table&gt;
+	&lt;tr&gt;
+		&lt;td colspan="3"&gt;com.example.backend.util.testyFitnesse.FitnesseTest&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td&gt;nazwa&lt;/td&gt;
+		&lt;td&gt;dodajOrg?&lt;/td&gt;
+		&lt;td&gt;getNazwa?&lt;/td&gt;
+	&lt;/tr&gt;
+	&lt;tr&gt;
+		&lt;td&gt;proba1&lt;/td&gt;
+		&lt;td class="fail"&gt;false &lt;span class="fit_label"&gt;expected&lt;/span&gt;&lt;hr&gt;true &lt;span class="fit_label"&gt;actual&lt;/span&gt;&lt;/td&gt;
+		&lt;td class="pass"&gt;proba1&lt;/td&gt;
+	&lt;/tr&gt;
+&lt;/table&gt;
+</content>
+    <relativePageName>FitnesseTest</relativePageName>
+  </result>
+  <executionLog>
+    <testSystem>fit:fit.FitServer</testSystem>
+    <command>java -cp /Users/jakubklawon/Desktop/Studia/5SEM/IO/SystemRozliczen/backend/target/classes:/Users/jakubklawon/Desktop/Studia/5SEM/IO/SystemRozliczen/fitnesse-standalone.jar fit.FitServer jakubs-air.home 50083 3863</command>
+    <exitCode>1</exitCode>
+    <stdOut></stdOut>
+    <stdErr></stdErr>
+  </executionLog>
+  <finalCounts>
+    <right>0</right>
+    <wrong>1</wrong>
+    <ignores>0</ignores>
+    <exceptions>0</exceptions>
+  </finalCounts>
+  <totalRunTimeInMillis>453</totalRunTimeInMillis>
+</testResults>
+

@@ -1,0 +1,8 @@
+!|com.example.backend.util.testyFitnesse.FitnesseTest|
+|nazwa|kwota|dodajDokument?|getLiczbaDok?|
+|piwo,jedzenie|22.92,32,29|true|2|
+|paliwo,piwo,glup>ty|22.31,33.42,55.22|false|4|
+|wycieczka, jedzenie, triangulator laserowy|99.99,21.37,133.70|true|7|
+|test,test,test|-32.43,22.88,22|false|9|
+|na/zwa,testowa|99.99,-2|false|9|
+|kkk<<KKK,towejdzie|32.92,992|false|10|

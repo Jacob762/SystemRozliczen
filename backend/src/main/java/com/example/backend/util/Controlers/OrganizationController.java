@@ -36,5 +36,4 @@ public class OrganizationController {
         return ResponseEntity.notFound().build();
     }
 
-
 }
