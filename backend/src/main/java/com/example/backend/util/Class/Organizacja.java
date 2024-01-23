@@ -115,7 +115,10 @@ public class Organizacja {
     }
 
     public boolean dodajDokument(Dokument dokument){
+        String []items = {"/","<",">","|"};
         try{
+            if(dokument.getKwota()<0) return false;
+            for(String item : items) if (dokument.getNazwa().contains(item)) return false;
             Dokumenty.add(dokument);
             return true;
         } catch (Exception e){
