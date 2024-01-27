@@ -23,12 +23,12 @@ export async function editDocument({
   accountantId: number;
   kwota: number;
 }) {
-  return axios.post(`http://localhost:8080/document`, {
+  return axios.post(`http://localhost:8080/document/edit`, {
     idO: organizationId,
     idDok: documentId,
-    Nazwa: nazwa,
+    nazwa: nazwa,
     IdK: accountantId,
-    Kwota: kwota,
+    kwota: kwota,
   });
 }
 
