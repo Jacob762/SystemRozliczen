@@ -154,6 +154,103 @@
       "targets": [],
       "value": "2024-01-02"
     }]
+  }, {
+    "id": "3aa29f2d-0431-422a-9901-a8840034d72f",
+    "name": "test_zakladki",
+    "commands": [{
+      "id": "d14cd165-8813-48d1-bad8-f2fc58d73c30",
+      "comment": "",
+      "command": "open",
+      "target": "http://localhost:3000/",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "18cbb493-1fe6-47cc-904b-7eb4218561c8",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "636x1033",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "a5208962-cd71-4fb4-85a2-e0713218ad12",
+      "comment": "",
+      "command": "click",
+      "target": "css=.lucide",
+      "targets": [
+        ["css=.lucide", "css:finder"]
+      ],
+      "value": ""
+    }, {
+      "id": "b09014f6-e62e-417a-ac55-cecc68cc81da",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Dokumenty",
+      "targets": [
+        ["linkText=Dokumenty", "linkText"],
+        ["css=li:nth-child(2) > .link", "css:finder"],
+        ["xpath=//a[contains(text(),'Dokumenty')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/dashboard/documents')]", "xpath:href"],
+        ["xpath=//li[2]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dokumenty')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "1f95d4c9-8207-4898-b1ca-265ebb82a793",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Panel administracyjny",
+      "targets": [
+        ["linkText=Panel administracyjny", "linkText"],
+        ["css=li:nth-child(3) > .link", "css:finder"],
+        ["xpath=//a[contains(text(),'Panel administracyjny')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/dashboard/admin')]", "xpath:href"],
+        ["xpath=//li[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Panel administracyjny')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "59eefb9a-e8ee-47df-b1ec-35ad38ac205a",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Panel ksiegowego",
+      "targets": [
+        ["linkText=Panel ksiegowego", "linkText"],
+        ["css=li:nth-child(4) > .link", "css:finder"],
+        ["xpath=//a[contains(text(),'Panel ksiegowego')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/dashboard/accountant')]", "xpath:href"],
+        ["xpath=//li[4]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Panel ksiegowego')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "042a5ddf-918c-4f9a-85bd-9f75a48216da",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Dashboard",
+      "targets": [
+        ["linkText=Dashboard", "linkText"],
+        ["css=li:nth-child(1) > .link", "css:finder"],
+        ["xpath=//a[contains(text(),'Dashboard')]", "xpath:link"],
+        ["xpath=//a[contains(@href, '/dashboard')]", "xpath:href"],
+        ["xpath=//a", "xpath:position"],
+        ["xpath=//a[contains(.,'Dashboard')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "62e2b064-135c-44a4-8035-b055edfc77cc",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Zobacz więcej",
+      "targets": [
+        ["linkText=Zobacz więcej", "linkText"],
+        ["css=.card__footer > .button", "css:finder"],
+        ["xpath=//a[contains(text(),'Zobacz więcej')]", "xpath:link"],
+        ["xpath=(//a[contains(@href, '/dashboard/documents')])[2]", "xpath:href"],
+        ["xpath=//div[3]/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Zobacz więcej')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }]
   }],
   "suites": [{
     "id": "f3dafa86-fa65-4705-8e84-4d1c1bcd408d",
