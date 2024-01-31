@@ -181,6 +181,20 @@
       ],
       "value": ""
     }, {
+      "id": "55a31c41-2e46-48e0-8f9b-b543fb8c487d",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "url"
+    }, {
+      "id": "f0aa14fd-b81f-4d74-bbe6-931ac36d455a",
+      "comment": "",
+      "command": "assert",
+      "target": "url",
+      "targets": [],
+      "value": "http://localhost:3000/dashboard"
+    }, {
       "id": "b09014f6-e62e-417a-ac55-cecc68cc81da",
       "comment": "",
       "command": "click",
@@ -194,6 +208,20 @@
         ["xpath=//a[contains(.,'Dokumenty')]", "xpath:innerText"]
       ],
       "value": ""
+    }, {
+      "id": "db66d31d-d277-471d-b1a8-d7977511c5a2",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "url"
+    }, {
+      "id": "34db2ace-9d85-4099-a7e2-3725278d0fc8",
+      "comment": "",
+      "command": "assert",
+      "target": "url",
+      "targets": [],
+      "value": "http://localhost:3000/dashboard/documents"
     }, {
       "id": "1f95d4c9-8207-4898-b1ca-265ebb82a793",
       "comment": "",
@@ -209,6 +237,20 @@
       ],
       "value": ""
     }, {
+      "id": "cc248c0e-9e36-4cdf-bbf1-93f9201b6cec",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "url"
+    }, {
+      "id": "c1a7586e-781f-4a7c-9639-659ea6da851d",
+      "comment": "",
+      "command": "assert",
+      "target": "url",
+      "targets": [],
+      "value": "http://localhost:3000/dashboard/admin"
+    }, {
       "id": "59eefb9a-e8ee-47df-b1ec-35ad38ac205a",
       "comment": "",
       "command": "click",
@@ -222,6 +264,20 @@
         ["xpath=//a[contains(.,'Panel ksiegowego')]", "xpath:innerText"]
       ],
       "value": ""
+    }, {
+      "id": "ee0891e4-db87-4b54-83c4-0bf7ebce18bd",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "url"
+    }, {
+      "id": "21e190b7-dbaa-4ad3-93df-254a0698b257",
+      "comment": "",
+      "command": "assert",
+      "target": "url",
+      "targets": [],
+      "value": "http://localhost:3000/dashboard/accountant"
     }, {
       "id": "042a5ddf-918c-4f9a-85bd-9f75a48216da",
       "comment": "",
@@ -237,6 +293,20 @@
       ],
       "value": ""
     }, {
+      "id": "8c089975-03bc-4652-bdc7-c544a8e78a80",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "url"
+    }, {
+      "id": "04d0eb23-0dd1-4957-b493-3d2cfb93aaa6",
+      "comment": "",
+      "command": "assert",
+      "target": "url",
+      "targets": [],
+      "value": "http://localhost:3000/dashboard"
+    }, {
       "id": "62e2b064-135c-44a4-8035-b055edfc77cc",
       "comment": "",
       "command": "click",
@@ -250,6 +320,20 @@
         ["xpath=//a[contains(.,'Zobacz więcej')]", "xpath:innerText"]
       ],
       "value": ""
+    }, {
+      "id": "a5a988f2-07e0-4449-ac96-b69e9c32847b",
+      "comment": "",
+      "command": "executeScript",
+      "target": "return window.location.href",
+      "targets": [],
+      "value": "url"
+    }, {
+      "id": "2ee4e946-6b5f-4180-995d-1efb56f5c4aa",
+      "comment": "",
+      "command": "assert",
+      "target": "url",
+      "targets": [],
+      "value": "http://localhost:3000/dashboard/documents"
     }]
   }],
   "suites": [{
