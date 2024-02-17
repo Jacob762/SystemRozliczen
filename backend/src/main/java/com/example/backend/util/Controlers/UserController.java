@@ -1,54 +1,32 @@
 package com.example.backend.util.Controlers;
 
-import com.example.backend.util.Class.Organizacja;
-import com.example.backend.util.Class.Pracownik;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
+import com.example.backend.util.Class.User;
+import com.example.backend.util.Services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import static com.example.backend.util.Controlers.Aplikacja.Organizacje;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user")
 public class UserController {
-    @PostMapping()
-    public ResponseEntity<Pracownik> dodajPracownik(@RequestBody String object){
-        JsonObject jsonObject = JsonParser.parseString(object)
-                .getAsJsonObject();
-        String name = jsonObject.get("Nazwa").toString();
-        int id = jsonObject.get("IdOrg").getAsInt();
-        Pracownik pracownik = new Pracownik(name.substring(1, name.length() - 1));
-        try {
-            for(Organizacja org : Organizacje){
-                if (org.getId()==id){
-                    if(org.dodajPracownika(pracownik)) {
-                        return ResponseEntity.status(HttpStatus.CREATED).body(pracownik);
-                    }
-                }
-            }
-        } catch (IndexOutOfBoundsException ex){
-            return ResponseEntity.notFound().build();
+    @Autowired
+    UserService userService;
+
+    @PostMapping("/{first_name}/{last_name}")
+    public ResponseEntity<User> addUser(@PathVariable String first_name, @PathVariable String last_name){
+        try{
+            User user = new User();
+            user.setImie(first_name);
+            user.setNazwisko(last_name);
+            userService.saveUser(user);
+            return ResponseEntity.status(HttpStatus.CREATED).body(user);
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.noContent().build();
         }
-
-        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(pracownik);
     }
-
-    @GetMapping()
-    public ResponseEntity<Pracownik> getPracownik(@RequestBody String object){
-        JsonObject jsonObject = JsonParser.parseString(object)
-                .getAsJsonObject();
-        int idOrg = jsonObject.get("IdOrg").getAsInt();
-        int idPrac = jsonObject.get("IdPrac").getAsInt();
-        Pracownik pracownik;
-        for(int i=0;i<Organizacje.size();i++){
-            if(Organizacje.get(i).getId()==idOrg) {
-                pracownik = Organizacje.get(i).getPracownik(idPrac);
-                return new ResponseEntity<>(pracownik, HttpStatus.OK);
-            }
-        }
-        return ResponseEntity.notFound().build();
-    }
-
 }

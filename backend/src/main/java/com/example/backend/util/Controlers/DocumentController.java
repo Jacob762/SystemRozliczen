@@ -3,8 +3,14 @@ package com.example.backend.util.Controlers;
 import com.example.backend.util.Class.Dokument;
 import com.example.backend.util.Class.Ksiegowy;
 import com.example.backend.util.Class.Organizacja;
+import com.example.backend.util.Services.AccountantService;
+import com.example.backend.util.Services.DocumentService;
+import com.example.backend.util.Services.OrganizationService;
+import com.fasterxml.jackson.databind.exc.InvalidDefinitionException;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,9 +20,16 @@ import java.util.List;
 import static com.example.backend.util.Controlers.Aplikacja.Organizacje;
 
 @RestController
+@Transactional
 @RequestMapping("/document")
 public class DocumentController {
-    @PostMapping("/edit") ///todo zmienic na set zamiast dodawania nowego
+    @Autowired
+    private DocumentService documentService;
+    @Autowired
+    private AccountantService accountantService;
+    @Autowired
+    private OrganizationService organizationService;
+    @PostMapping("/edit")
     public ResponseEntity<Dokument> edytujDokument(@RequestBody String object){
         JsonObject jsonObject = JsonParser.parseString(object)
                 .getAsJsonObject();
@@ -24,75 +37,66 @@ public class DocumentController {
         int idDok = jsonObject.get("idDok").getAsInt();
         float nowaKwota = jsonObject.get("kwota").getAsFloat();
         String nowaNazwa = jsonObject.get("nazwa").getAsString();
-        for(Organizacja organizacja : Organizacje){
-            if(organizacja.getId()==id){
-                organizacja.getDokument(idDok).setKwota(nowaKwota);
-                organizacja.getDokument(idDok).setNazwa(nowaNazwa);
-                return ResponseEntity.status(HttpStatus.OK).build();
-            }
+        Dokument dokument = documentService.findDocumentById(idDok);
+        dokument.setKwota(nowaKwota);
+        dokument.setNazwa(nowaNazwa);
+        try{
+            documentService.saveDocument(dokument); //spring.jackson.serialization.FAIL_ON_EMPTY_BEANS=false
+            return new ResponseEntity<>(dokument,HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
-    @PostMapping() ///todo we froncie najpierw getksiegowy, wywolac jesli inne niz notfound
+    @PostMapping()
     public ResponseEntity<Dokument> dodajDokument(@RequestBody String object){
         JsonObject jsonObject = JsonParser.parseString(object)
                 .getAsJsonObject();
-        String name = jsonObject.get("Nazwa").toString();
-        int idKsiegowy = jsonObject.get("IdK").getAsInt();
-        float kwota = jsonObject.get("Kwota").getAsFloat();
-        int idOrg = jsonObject.get("idO").getAsInt();
-        Organizacja org = Organizacje.get(0);
-        Ksiegowy ksiegowy = org.getKsiegowy(0);
-        Dokument dokument;
-        try{
-            for(int i=0;i<Organizacje.size();i++) {
-                if(Organizacje.get(i).getId()==idOrg){
-                    org = Organizacje.get(i);
-                    ksiegowy = org.getKsiegowy(idKsiegowy);
-                    if(ksiegowy==null) return ResponseEntity.notFound().build();
-                    break;
-                }
-            }
-            dokument = new Dokument(name,kwota,ksiegowy);
-            if(!org.dodajDokument(dokument)) return ResponseEntity.badRequest().build();
-        } catch(IndexOutOfBoundsException ex){
-            return ResponseEntity.notFound().build();
-        }
-
+        String name = jsonObject.get("name").toString();
+        int idKsiegowy = jsonObject.get("accountantID").getAsInt();
+        float kwota = jsonObject.get("value").getAsFloat();
+        int idOrg = jsonObject.get("organizationID").getAsInt();
+        name = name.substring(1,name.length()-1);
+        Dokument dokument = new Dokument();
+        dokument.setAutor(accountantService.findAccountant(idKsiegowy));
+        dokument.setKwota(kwota);
+        dokument.setNazwa(name);
+        dokument.setOrganizacja(organizationService.findOrganizationById(idOrg));
+        documentService.saveDocument(dokument);
         return ResponseEntity.status(HttpStatus.CREATED).body(dokument);
     }
     //dokumenty.size() - 3 = ostatnie 3 dokumenty
     @GetMapping("/{idOrg}/{id}") //najpierw getdokumenty do wyswietlania wszystkich i potem konkretny getDokument
     public ResponseEntity<Dokument> getDokument(@PathVariable int idOrg, @PathVariable int id){
-        Dokument dokument;
-        for(Organizacja org : Organizacje){
-            if(org.getId()==idOrg){
-                dokument = org.getDokument(id);
-                if(dokument!=null) return new ResponseEntity<>(dokument, HttpStatus.OK);
-            }
+        try{
+            Dokument dokument;
+            dokument = documentService.findDocumentById(id);
+            return new ResponseEntity<>(dokument,HttpStatus.OK);
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
     @GetMapping("/{idOrg}")
     public ResponseEntity<List<Dokument>> getDokumenty(@PathVariable int idOrg){
-        for(Organizacja organizacja : Organizacje){
-            if(organizacja.getId()==idOrg){
-                return new ResponseEntity<>(organizacja.Dokumenty,HttpStatus.OK);
-            }
+        try{
+            return new ResponseEntity<>(organizationService.findOrganizationById(idOrg).Dokumenty,HttpStatus.OK);
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @GetMapping("/liczba/{idOrg}")
     public ResponseEntity<Integer> getSize(@PathVariable int idOrg){
-        for(Organizacja organizacja : Organizacje){
-            if(organizacja.getId()==idOrg){
-                return new ResponseEntity<>(organizacja.Dokumenty.size(),HttpStatus.OK);
-            }
+        try{
+            return new ResponseEntity<>(organizationService.findOrganizationById(idOrg).Dokumenty.size(),HttpStatus.OK);
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 
     @PostMapping("/sort/{id}")
@@ -108,13 +112,13 @@ public class DocumentController {
 
     @DeleteMapping("/{idOrg}/{id}")
     public ResponseEntity<Dokument> usunDokument(@PathVariable int idOrg, @PathVariable int id){
-        for(Organizacja organizacja : Organizacje){
-            if(organizacja.getId()==idOrg){
-                if(organizacja.usunDokument(organizacja.getDokument(id))) return ResponseEntity.status(HttpStatus.OK).build();
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-            }
+        try{
+            if(documentService.deleteDocument(id)) return new ResponseEntity<>(HttpStatus.OK);
+            else return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
 

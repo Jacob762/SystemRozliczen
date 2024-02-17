@@ -16,7 +16,8 @@ public class SetUp extends Fixture{
 
     public SetUp(){
         organizacja = new Organizacja("NazwaTest");
-        ksiegowy = new Ksiegowy("Grzesiek");
+        ksiegowy = new Ksiegowy();
+        ksiegowy.setNazwa("Grzesiek");
         organizacjaId = organizacja.getId();
         ksiegowyId = ksiegowy.getId();
 

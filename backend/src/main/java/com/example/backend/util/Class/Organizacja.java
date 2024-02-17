@@ -1,27 +1,49 @@
 package com.example.backend.util.Class;
 
+import jakarta.persistence.*;
+import jakarta.transaction.Transactional;
+import org.springframework.data.jpa.repository.Query;
+
 import java.util.*;
 
+@Entity
+@Table(name = "organizations")
+//@Transactional
 public class Organizacja {
-    public List<Dokument> Dokumenty; ///todo zamienic na funkcje, ktora zwraca, zamiast udostepniac zmienna
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "organization_id", cascade = CascadeType.ALL)
+    public List<Dokument> Dokumenty;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "organization_id", cascade = CascadeType.ALL)
     private List<AdministratorOrg> Administratorzy;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "organization_id", cascade = CascadeType.ALL)
     private List<Ksiegowy> Ksiegowi;
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "organization_id", cascade = CascadeType.ALL)
     private List<Pracownik> Pracownicy;
+    @Column(name = "name")
     private String Nazwa;
-    private int Id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
+    private int ID;
     private static int count = 0;
-    private List<Wykres> Wykresy;
-    private List<Raport> Raporty;
+//    private List<Wykres> Wykresy;
+//    private List<Raport> Raporty;
 
     public Organizacja(String nazwa){
         this.Nazwa = nazwa;
-        this.Id = count++;
+        this.ID = count++;
         Pracownicy = new ArrayList<>();
         Ksiegowi = new ArrayList<>();
         Administratorzy = new ArrayList<>();
         Dokumenty = new ArrayList<>();
-        Wykresy = new ArrayList<>();
-        Raporty = new ArrayList<>();
+//        Wykresy = new ArrayList<>();
+//        Raporty = new ArrayList<>();
+    }
+
+    public Organizacja() {
+        Pracownicy = new ArrayList<>();
+        Ksiegowi = new ArrayList<>();
+        Administratorzy = new ArrayList<>();
+        Dokumenty = new ArrayList<>();
     }
 
     public static void setCount(int newCount) {
@@ -33,7 +55,7 @@ public class Organizacja {
     }
 
     public int getId(){
-        return this.Id;
+        return this.ID;
     }
 
     public Pracownik getPracownik(int index){
@@ -70,6 +92,7 @@ public class Organizacja {
     public String getNazwa(){
         return this.Nazwa;
     }
+    public void setNazwa(String nazwa) {this.Nazwa = nazwa;}
 
     public boolean dodajPracownika(Pracownik pracownik){
         try{
@@ -117,7 +140,7 @@ public class Organizacja {
     public boolean dodajDokument(Dokument dokument){
         String []items = {"/","<",">","|"};
         try{
-            if(dokument.getKwota()<0) return false;
+            if(dokument.getKwota()<=0) return false;
             for(String item : items) if (dokument.getNazwa().contains(item)) return false;
             Dokumenty.add(dokument);
             return true;

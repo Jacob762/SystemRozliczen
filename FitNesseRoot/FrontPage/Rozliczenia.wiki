@@ -5,4 +5,4 @@ Suite
 !contents -R2 -g -p -f -h
 
 "Testy systemu rozliczen"
-!path /home/jacob/IdeaProjects/SystemRozliczen/backend/target/classes
+!path /Users/jakubklawon/Desktop/Studia/5SEM/IO/SystemRozliczen/backend/target/classes

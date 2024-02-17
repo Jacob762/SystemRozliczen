@@ -167,4 +167,6 @@ class BackendApplicationTests {
     ///todo jedna funkcjonalnosc na osobe z fitnessem, mockowanie jesli nie ma bazy, ale nie ma wymogu mockowania
     // testujemy cala sciezke funkcjonalna, funkcje nalezace do fasady z odpowiednimi parametrami, sprawdzamy co wyjdzie
     // warianty dla roznych wartosci, doprowadzic funkcje do stanu gdzie sa testowalne i cos zwracaja
+
+    ///todo selenium jeden test na osobe, zrobic edycje dokumentow
 }

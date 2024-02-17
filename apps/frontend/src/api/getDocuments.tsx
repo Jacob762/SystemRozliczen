@@ -1,12 +1,12 @@
 import axios from 'axios';
 
 export async function getDocuments() {
-  const { data } = await axios.get('http://localhost:8080/document/0');
+  const { data } = await axios.get('http://localhost:8080/document/1');
   return data;
 }
 
 export async function sortDocuments() {
-  await axios.post('http://localhost:8080/document/sort/0');
+  await axios.post('http://localhost:8080/document/sort/1');
   return true;
 }
 
@@ -42,4 +42,23 @@ export async function deleteDocument({
   return axios.delete(
     `http://localhost:8080/document/${organizationId}/${documentId}`,
   );
+}
+
+export async function addDocument({
+ organizationID,
+ accountantID,
+ nazwa,
+ kwota
+}: {
+  organizationID: number;
+  nazwa: string;
+  accountantID: number;
+  kwota: number;
+}) {
+  return axios.post(`http://localhost:8080/document/edit`, {
+    organizationID: organizationID,
+    name: nazwa,
+    accountantID: accountantID,
+    value: kwota,
+  });
 }

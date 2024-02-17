@@ -1,7 +1,7 @@
 import { Metadata } from 'next';
 import { css } from 'styled-system/css';
 import { Center } from 'styled-system/jsx';
-import { getAccountant } from '~/api/getAccountant';
+import {getAccountant} from '~/api/getAccountant';
 import { getOrganization } from '~/api/getOrganization';
 import Dashboard from './dashboard';
 
@@ -21,7 +21,7 @@ export default async function Accountant() {
       <Center className={css({ fontSize: '2xl', fontWeight: 'bold' })}>
         Panel ksiegowego
       </Center>
-      <Dashboard accountant={initialData} organization={orgInitialData} />
+      <Dashboard accountant={initialData} organization={orgInitialData}/>
     </>
   );
 }

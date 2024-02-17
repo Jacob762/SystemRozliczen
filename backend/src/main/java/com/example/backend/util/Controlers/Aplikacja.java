@@ -2,13 +2,14 @@ package com.example.backend.util.Controlers;
 
 import com.example.backend.util.Class.*;
 
+import com.example.backend.util.Services.OrganizationService;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
-import org.apache.catalina.connector.Response;
-import org.aspectj.weaver.ast.Or;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,15 +17,21 @@ import org.springframework.web.bind.annotation.*;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 @RestController
+@Transactional
 public class Aplikacja {
+    final OrganizationService organizationService;
     protected static List<Organizacja> Organizacje;
     protected static List<AdministratorAPK> Administratorzy;
-    public Aplikacja(){
+
+    public Aplikacja(OrganizationService organizationService){
+
+
+        Organizacja organizacja = organizationService.findOrganizationById(0);
+        //System.out.println(organizacja.Dokumenty.get(0).getId());
+
         Organizacje = new ArrayList<>();
         Administratorzy = new ArrayList<>();
 
@@ -33,7 +40,6 @@ public class Aplikacja {
        } catch (Exception e) {
            System.out.println(e.getMessage());
        }
-
 
        // Runtime uzywany do wywolywania funkcji przy wylaczaniu sie aplikacji:
        Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
@@ -45,6 +51,7 @@ public class Aplikacja {
                }
            }
        }));
+        this.organizationService = organizationService;
     }
 
     @GetMapping("/health")

@@ -2,12 +2,24 @@ import { css } from 'styled-system/css';
 import { Stack } from 'styled-system/jsx';
 import { Button } from '~/components/ui/button';
 import * as Card from '~/components/ui/card';
+import {useMutation, useQueryClient} from "@tanstack/react-query";
+import {addDocument, deleteDocument} from "~/api/getDocuments";
 
 export default function AccountantDashboard(props: {
   accountant: any;
   organization: any;
 }) {
-  const { accountant, organization } = props;
+
+  const queryClient = useQueryClient();
+
+  const addMutation = useMutation({
+    mutationFn: addDocument,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['documents'] });
+    },
+  });
+
+  const { accountant, organization} = props;
 
   return (
     <Card.Root width="lg">
@@ -20,7 +32,7 @@ export default function AccountantDashboard(props: {
         <Stack direction="row" gap="4">
           <div className={css({ flex: '2' })}>
             <Card.Title>Liczba dodanych dokumentow</Card.Title>
-            <Card.Description>120</Card.Description>
+            <Card.Description>{accountant.documentsNumber}</Card.Description>
           </div>{' '}
           {/* todo wyszukanie liczby dokumentow w backendzie */}
           <div className={css({ flex: '1' })}>

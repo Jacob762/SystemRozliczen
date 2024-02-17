@@ -2,7 +2,7 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { Stack } from 'styled-system/jsx';
-import { getAccountant } from '~/api/getAccountant';
+import {getAccountant} from '~/api/getAccountant';
 import { getOrganization } from '~/api/getOrganization';
 import AccountantDashboard from '~/components/dashboard/Accountant/AccountantDashboard';
 
@@ -23,9 +23,10 @@ export default function Dashboard(props: {
     initialData: props.organization,
   });
 
+
   return (
     <Stack direction="column" gap="4">
-      <AccountantDashboard accountant={data} organization={orgData} />
+      <AccountantDashboard accountant={data} organization={orgData}/>
     </Stack>
   );
 }

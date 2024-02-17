@@ -1,9 +1,11 @@
 package com.example.backend.util.Controlers;
 
 import com.example.backend.util.Class.Organizacja;
+import com.example.backend.util.Services.OrganizationService;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import org.json.JSONObject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,23 +20,26 @@ import static com.example.backend.util.Controlers.Aplikacja.Organizacje;
 @RestController
 @RequestMapping("/statystyka")
 public class StatystykaController {
+    @Autowired
+    private OrganizationService organizationService;
     @GetMapping("/{id}")
     public ResponseEntity<String> totalStatystyka(@PathVariable int id){
         JSONObject json = new JSONObject();
-        for(Organizacja organizacja : Organizacje) {
-            if(organizacja.getId()==id){
-                float wynik = organizacja.totalStatystyka();
-                int liczbaKsiegowych = organizacja.getKsiegowiSize();
-                int liczbaPracownikow = organizacja.getPracownicySize();
-                int dokumenty = organizacja.Dokumenty.size();
-                json.put("kwota",wynik);
-                json.put("dokumenty",dokumenty);
-                json.put("ksiegowi",liczbaKsiegowych);
-                json.put("pracownicy",liczbaPracownikow);
-                return new ResponseEntity<>(json.toString(),HttpStatus.OK);
-            }
+        try{
+            Organizacja organizacja = organizationService.findOrganizationById(id);
+            float wynik = organizacja.totalStatystyka();
+            int liczbaKsiegowych = organizacja.getKsiegowiSize();
+            int liczbaPracownikow = organizacja.getPracownicySize();
+            int dokumenty = organizacja.Dokumenty.size();
+            json.put("kwota",wynik);
+            json.put("dokumenty",dokumenty);
+            json.put("ksiegowi",liczbaKsiegowych);
+            json.put("pracownicy",liczbaPracownikow);
+            return new ResponseEntity<>(json.toString(),HttpStatus.OK);
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
+
         }
-        return ResponseEntity.notFound().build();
     }
 
     @GetMapping()

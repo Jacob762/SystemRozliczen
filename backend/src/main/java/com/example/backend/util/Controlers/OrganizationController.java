@@ -1,6 +1,8 @@
 package com.example.backend.util.Controlers;
 
 import com.example.backend.util.Class.Organizacja;
+import com.example.backend.util.Services.OrganizationService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,11 +12,19 @@ import static com.example.backend.util.Controlers.Aplikacja.Organizacje;
 @RestController
 @RequestMapping("/organization")
 public class OrganizationController {
-    @PostMapping
-    public ResponseEntity<Organizacja> dodajOrganizacje(@RequestBody String nazwa) {
-        Organizacja org = new Organizacja(nazwa);
-        Organizacje.add(org);
-        return ResponseEntity.status(HttpStatus.CREATED).body(org);
+    @Autowired
+    private OrganizationService organizationService;
+    @PostMapping("/{name}")
+    public ResponseEntity<Organizacja> dodajOrganizacje(@PathVariable String name) {
+        try{
+            Organizacja organizacja = new Organizacja();
+            organizacja.setNazwa(name);
+            organizationService.createOrganization(organizacja);
+            return new ResponseEntity<>(organizacja,HttpStatus.OK);
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.noContent().build();
+        }
     }
 
     @DeleteMapping("/{id}")
@@ -30,10 +40,11 @@ public class OrganizationController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Organizacja> getOrganizacja(@PathVariable int id){
-        for(int i=0;i<Organizacje.size();i++){
-            if(Organizacje.get(i).getId()==id) return new ResponseEntity<>(Organizacje.get(i), HttpStatus.OK);
+        try{
+            return new ResponseEntity<>(organizationService.findOrganizationById(id), HttpStatus.OK);
+        } catch (Exception e){
+            return ResponseEntity.notFound().build();
         }
-        return ResponseEntity.notFound().build();
     }
 
 }

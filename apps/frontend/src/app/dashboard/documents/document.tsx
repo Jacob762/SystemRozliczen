@@ -109,7 +109,6 @@ export default function Document(props: { document: any }) {
         ) : (
           <IconButton onClick={() => handleEditClick()}>
             <Edit />
-            {/* todo POST :   /document/edit - tu wymagany string z json, przekazywane dalej do funkcji dodaj_dokument, DocumentController*/}
           </IconButton>
         )}
       </Table.Cell>
