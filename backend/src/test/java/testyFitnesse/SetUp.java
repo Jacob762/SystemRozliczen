@@ -1,4 +1,4 @@
-package com.example.backend.util.testyFitnesse;
+package testyFitnesse;
 
 import com.example.backend.util.Class.Ksiegowy;
 import com.example.backend.util.Class.Organizacja;

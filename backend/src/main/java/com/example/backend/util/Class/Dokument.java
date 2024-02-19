@@ -12,7 +12,7 @@ import java.util.Date;
 public class Dokument {
     private String Nazwa;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int ID;
     @Column(name = "organization_id", insertable = false, updatable = false)///todo fk na organizacje

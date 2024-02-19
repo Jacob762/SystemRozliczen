@@ -1,12 +1,7 @@
-package com.example.backend.util.testyFitnesse;
+package testyFitnesse;
 
 import com.example.backend.util.Class.Dokument;
-import com.example.backend.util.Class.Organizacja;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import fit.ColumnFixture;
-import org.springframework.http.ResponseEntity;
 
 public class FitnesseTest extends ColumnFixture{
     String []nazwa;

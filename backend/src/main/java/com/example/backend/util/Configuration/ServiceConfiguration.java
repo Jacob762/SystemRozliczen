@@ -1,9 +1,6 @@
 package com.example.backend.util.Configuration;
 
-import com.example.backend.util.Services.AccountantService;
-import com.example.backend.util.Services.DocumentService;
-import com.example.backend.util.Services.OrganizationService;
-import com.example.backend.util.Services.UserService;
+import com.example.backend.util.Services.*;
 import org.springframework.context.annotation.*;
 
 
@@ -26,4 +23,13 @@ public class ServiceConfiguration {
 
     @Bean
     OrganizationService organizationService() {return new OrganizationService();}
+
+    @Bean
+    ApplicationAdminService applicationAdminService() {return new ApplicationAdminService();}
+
+    @Bean
+    OrganizationAdminService organizationAdminService() {return new OrganizationAdminService();}
+
+    @Bean
+    EmployeeService employeeService() {return new EmployeeService();}
 }

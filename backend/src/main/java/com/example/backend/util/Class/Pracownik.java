@@ -6,16 +6,22 @@ import jakarta.persistence.*;
 @Table(name = "employees")
 
 public class Pracownik {
-    private String Nazwa;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "ID")
-    private User currentuser;
-
-    @Column(name = "organization_id")
-    private int organization_id;
     @Id
     @Column(name = "user_id")
     private int Id;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    @MapsId
+    private User currentuser;
+
+    @Column(name = "organization_id", insertable = false, updatable = false)
+    private int organization_id;
+
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    @JoinColumn(name = "organization_id", referencedColumnName = "id") //problem
+    private Organizacja organizacja;
+    @Column(name = "name")
+    private String Nazwa;
     private static int count = 0;
     public Pracownik(String nazwa){
         this.Nazwa = nazwa;
@@ -23,7 +29,6 @@ public class Pracownik {
     }
 
     public Pracownik() {
-        this.Nazwa = currentuser.getImie() + " " + currentuser.getNazwisko();
     }
 
     public static void setCount(int newCount) {
@@ -42,5 +47,10 @@ public class Pracownik {
         return this.Id;
     }
     public int getOrganization_id(){return this.organization_id;}
+    public User getUser(){return this.currentuser;}
+    public void setUser(User user){this.currentuser = user;}
+    public void setOrganizacja(Organizacja organizacja){this.organizacja = organizacja;}
+
+    public void setNazwa(String nazwa){this.Nazwa = nazwa;}
 
 }

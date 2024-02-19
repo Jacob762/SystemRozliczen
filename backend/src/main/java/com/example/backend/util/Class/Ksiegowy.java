@@ -9,7 +9,6 @@ import java.util.List;
 
 public class Ksiegowy {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "user_id")
     private int ID;
 
@@ -57,8 +56,12 @@ public class Ksiegowy {
 
     public void setNazwa(String nazwa){this.Nazwa = nazwa;}
     public void setUser(User user){this.currentuser = user;}
+    public User getUser(){return this.currentuser;}
     public void setOrganization_id(int id){this.organization_id = id;}
     public void setOrganizacja(Organizacja organizacja){this.organizacja = organizacja;}
 
-    public int getDocumentsNumber(){return this.dokumentList.size();}
+    public int getDocumentsNumber(){
+        if(dokumentList==null) return 0;
+        return this.dokumentList.size();
+    }
 }

@@ -5,16 +5,15 @@ import jakarta.persistence.*;
 @Entity
 @Table(name = "app_admin")
 public class AdministratorAPK {
-    private String Nazwa;
-
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", referencedColumnName = "ID")
-    private User currentUser;
-    private String Imie;
-    private String Nazwisko;
     @Id
     @Column(name = "user_id")
     private int Id;
+    @OneToOne
+    @JoinColumn(name = "user_id")
+    @MapsId
+    private User currentuser;
+    @Column(name = "name")
+    private String Nazwa;
     private static int count = 0;
     public AdministratorAPK(String nazwa){
         this.Nazwa = nazwa;
@@ -23,9 +22,7 @@ public class AdministratorAPK {
     }
 
     public AdministratorAPK() {
-        this.Imie = currentUser.getImie();
-        this.Nazwisko = currentUser.getNazwisko();
-        this.Nazwa = Imie + " " + Nazwisko;
+
     }
 
     public static void setCount(int newCount) {
@@ -43,4 +40,6 @@ public class AdministratorAPK {
     public int getId(){
         return this.Id;
     }
+
+    public User getUser(){return this.currentuser;}
 }

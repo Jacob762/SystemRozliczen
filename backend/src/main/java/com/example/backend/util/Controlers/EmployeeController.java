@@ -2,8 +2,13 @@ package com.example.backend.util.Controlers;
 
 import com.example.backend.util.Class.Organizacja;
 import com.example.backend.util.Class.Pracownik;
+import com.example.backend.util.Class.User;
+import com.example.backend.util.Services.EmployeeService;
+import com.example.backend.util.Services.OrganizationService;
+import com.example.backend.util.Services.UserService;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,26 +18,29 @@ import static com.example.backend.util.Controlers.Aplikacja.Organizacje;
 @RestController
 @RequestMapping("/employee")
 public class EmployeeController {
-    @PostMapping()
-    public ResponseEntity<Pracownik> dodajPracownik(@RequestBody String object){
-        JsonObject jsonObject = JsonParser.parseString(object)
-                .getAsJsonObject();
-        String name = jsonObject.get("Nazwa").toString();
-        int id = jsonObject.get("IdOrg").getAsInt();
-        Pracownik pracownik = new Pracownik(name.substring(1, name.length() - 1));
-        try {
-            for(Organizacja org : Organizacje){
-                if (org.getId()==id){
-                    if(org.dodajPracownika(pracownik)) {
-                        return ResponseEntity.status(HttpStatus.CREATED).body(pracownik);
-                    }
-                }
-            }
-        } catch (IndexOutOfBoundsException ex){
-            return ResponseEntity.notFound().build();
-        }
+    @Autowired
+    EmployeeService employeeService;
 
-        return ResponseEntity.status(HttpStatus.BAD_GATEWAY).body(pracownik);
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    OrganizationService organizationService;
+
+    @PostMapping("/{user_id}/{organization_id}")
+    public ResponseEntity<Pracownik> dodajPracownik(@PathVariable int user_id, @PathVariable int organization_id){
+        Pracownik pracownik = new Pracownik();
+        try{
+            User user = userService.findUserById(user_id);
+            pracownik.setUser(user);
+            pracownik.setOrganizacja(organizationService.findOrganizationById(organization_id));
+            pracownik.setNazwa(user.getImie() + " " + user.getNazwisko());
+            if(employeeService.addEmployee(pracownik)) return new ResponseEntity<>(pracownik,HttpStatus.OK);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        } catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_GATEWAY);
+        }
     }
 
     @GetMapping()

@@ -21,7 +21,7 @@ public class Organizacja {
     @Column(name = "name")
     private String Nazwa;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     private int ID;
     private static int count = 0;
